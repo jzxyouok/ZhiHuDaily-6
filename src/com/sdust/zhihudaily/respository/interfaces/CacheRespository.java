@@ -5,12 +5,14 @@
  */
 package com.sdust.zhihudaily.respository.interfaces;
 
+import com.sdust.zhihudaily.bean.StartImage;
+
 /**
  * 类名：CacheRespository 说明：
  */
 public interface CacheRespository {
 
-	void getStartImage();
+	void getStartImage(int height,int width,Callback<StartImage> callback);
 
 	public interface Callback<T> {
 		public void success(T t);

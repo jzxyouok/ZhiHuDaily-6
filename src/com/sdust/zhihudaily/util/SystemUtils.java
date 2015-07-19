@@ -7,7 +7,7 @@ import android.app.Activity;
  * 类名：SystemUtil
  * 说明：系统工具类
  */
-public class SystemUtil {
+public class SystemUtils {
 	
 	public static int getScreenHeight(Context context) {
 		DisplayMetrics dm = new DisplayMetrics();

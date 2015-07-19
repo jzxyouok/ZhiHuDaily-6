@@ -25,7 +25,7 @@ public class ZhiHuApplication extends Application{
 	
 	public static Respository getRespository() {
 		if(sRespository == null) {
-			sRespository = new RespositoryImp();
+			sRespository = new RespositoryImp(applicationContext);
 		}
 		return sRespository;
 	}

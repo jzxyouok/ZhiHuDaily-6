@@ -1,13 +1,19 @@
 package com.sdust.zhihudaily.bean;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * 类名：StartImage
  * 说明：开始界面的bean类
  */
 public class StartImage {
 	
+	@Expose
 	private String text;
+	
+	@Expose
 	private String img;
+	
 	public String getText() {
 		return text;
 	}

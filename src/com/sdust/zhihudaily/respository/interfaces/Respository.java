@@ -13,7 +13,7 @@ import android.provider.MediaStore.Video;
  * 类名：Respository 说明：
  */
 public interface Respository {
-	void getStartImage(Callback<StartImage> callback) ;
+	void getStartImage(int height,int width,Callback<StartImage> callback) ;
 
 
 	public interface Callback<T> {

@@ -2,13 +2,12 @@ package com.sdust.zhihudaily.fragment;
 
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.bean.StartImage;
 import com.sdust.zhihudaily.respository.interfaces.Respository;
-import com.sdust.zhihudaily.util.SystemUtil;
-
-
+import com.sdust.zhihudaily.util.SystemUtils;
 
 
 
@@ -16,6 +15,7 @@ import com.sdust.zhihudaily.util.SystemUtil;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +44,8 @@ public class StartFragment extends Fragment{
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		mHeight = SystemUtil.getScreenHeight(activity);
-		mWidth = SystemUtil.getScreenWidth(activity);
+		mHeight = SystemUtils.getScreenHeight(activity);
+		mWidth = SystemUtils.getScreenWidth(activity);
 	}
 	
 	@Override
@@ -80,7 +80,7 @@ public class StartFragment extends Fragment{
 	}
 	
 	private void loadImage() {
-		ZhiHuApplication.getRespository().getStartImage(new Respository.Callback<StartImage>() {
+		ZhiHuApplication.getRespository().getStartImage(mHeight,mWidth,new Respository.Callback<StartImage>() {
 
 			@Override
 			public void success(StartImage image) {
@@ -91,8 +91,10 @@ public class StartFragment extends Fragment{
 
 			@Override
 			public void failure(Exception e) {
-				// TODO Auto-generated method stub
-				
+				 Log.i(TAG, "default image.");
+	                mStartImg.setBackgroundResource(R.drawable.bg_splash);
+	                mAuthorView.setText(getResources().getString(R.string.start_text));
+	                e.printStackTrace();
 			}
 		});
 		
