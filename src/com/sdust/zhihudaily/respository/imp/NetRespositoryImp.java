@@ -7,4 +7,10 @@ import com.sdust.zhihudaily.respository.interfaces.*;
  */
 public class NetRespositoryImp implements NetRespository{
 
+	@Override
+	public void getStartImage() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

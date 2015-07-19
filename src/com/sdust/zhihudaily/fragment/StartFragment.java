@@ -3,7 +3,11 @@ package com.sdust.zhihudaily.fragment;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.R;
+import com.sdust.zhihudaily.ZhiHuApplication;
+import com.sdust.zhihudaily.bean.StartImage;
+import com.sdust.zhihudaily.respository.interfaces.Respository;
 import com.sdust.zhihudaily.util.SystemUtil;
+
 
 
 
@@ -76,6 +80,21 @@ public class StartFragment extends Fragment{
 	}
 	
 	private void loadImage() {
+		ZhiHuApplication.getRespository().getStartImage(new Respository.Callback<StartImage>() {
+
+			@Override
+			public void success(StartImage image) {
+				mAuthorView.setText(image.getText());
+				
+				 ImageLoader.getInstance().displayImage(image.getImg(), mStartImg, mOptions);
+			}
+
+			@Override
+			public void failure(Exception e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 	}
 }

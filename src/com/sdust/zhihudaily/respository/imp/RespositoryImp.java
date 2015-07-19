@@ -5,6 +5,9 @@
  */
 package com.sdust.zhihudaily.respository.imp;
 
+import com.sdust.zhihudaily.bean.StartImage;
+import com.sdust.zhihudaily.respository.interfaces.CacheRespository;
+import com.sdust.zhihudaily.respository.interfaces.NetRespository;
 import com.sdust.zhihudaily.respository.interfaces.Respository;
 
 /**
@@ -12,10 +15,33 @@ import com.sdust.zhihudaily.respository.interfaces.Respository;
  * ËµÃ÷£º
  */
 public class RespositoryImp implements Respository{
+	
+	private CacheRespository mCacheResImp;
+	
+	private NetRespository mNetResImp;
+	
+	public RespositoryImp() {
+		mCacheResImp = new CacheRespositoryImp();
+		mNetResImp = new NetRespositoryImp();
+	}
 
 	@Override
-	public void getStartImage() {
-		// TODO Auto-generated method stub
+	public void getStartImage(Callback<StartImage> callback) {
+		mCacheResImp.getStartImage(new CacheRespository.Callback<StartImage>() {
+
+			@Override
+			public void success(StartImage image) {
+				
+			}
+
+			@Override
+			public void failure(Exception e) {
+				
+			}
+		});
+		
+		
+		mNetResImp.getStartImage();
 		
 	}
 

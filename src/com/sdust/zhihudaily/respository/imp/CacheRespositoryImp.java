@@ -13,4 +13,10 @@ import com.sdust.zhihudaily.respository.interfaces.CacheRespository;
  */
 public class CacheRespositoryImp implements CacheRespository{
 
+	@Override
+	public void getStartImage() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

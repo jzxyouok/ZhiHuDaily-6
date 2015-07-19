@@ -5,12 +5,20 @@
  */
 package com.sdust.zhihudaily.respository.interfaces;
 
+import com.sdust.zhihudaily.bean.StartImage;
+
 import android.provider.MediaStore.Video;
 
 /**
- * 类名：Respository
- * 说明：
+ * 类名：Respository 说明：
  */
 public interface Respository {
-	public void getStartImage() ;
+	void getStartImage(Callback<StartImage> callback) ;
+
+
+	public interface Callback<T> {
+		public void success(T t);
+
+		public void failure(Exception e);
+	}
 }
