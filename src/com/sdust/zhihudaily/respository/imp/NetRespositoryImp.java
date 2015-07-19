@@ -1,4 +1,5 @@
 package com.sdust.zhihudaily.respository.imp;
+import com.sdust.zhihudaily.bean.StartImage;
 import com.sdust.zhihudaily.respository.interfaces.*;
 /**
  * ÎÄ¼þÃû£ºCacheRespositoryImp.java
@@ -8,9 +9,12 @@ import com.sdust.zhihudaily.respository.interfaces.*;
 public class NetRespositoryImp implements NetRespository{
 
 	@Override
-	public void getStartImage() {
-		// TODO Auto-generated method stub
+	public void getStartImage(int height, int width,
+			Callback<StartImage> callback) {
+		
 		
 	}
+
+	
 
 }

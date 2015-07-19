@@ -5,7 +5,9 @@
  */
 package com.sdust.zhihudaily.respository.interfaces;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.bean.StartImage;
+import com.sdust.zhihudaily.respository.interfaces.Respository.Callback;
 
 import android.provider.MediaStore.Video;
 
@@ -13,7 +15,7 @@ import android.provider.MediaStore.Video;
  * 类名：Respository 说明：
  */
 public interface Respository {
-	void getStartImage(int height,int width,Callback<StartImage> callback) ;
+	
 
 
 	public interface Callback<T> {
@@ -21,4 +23,8 @@ public interface Respository {
 
 		public void failure(Exception e);
 	}
+
+
+	void getStartImage(int height, int width, Callback<StartImage> callback,
+			DisplayImageOptions options);
 }

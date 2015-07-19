@@ -10,5 +10,8 @@ package com.sdust.zhihudaily;
  * 说明：常量
  */
 public class Constants {
-	public static final int IMAGE_CACHE_SIZE = 50 * 1024 * 1024;//50M
+	public static final int IMAGE_CACHE_SIZE = 50 * 1024 * 1024;//图片的缓存
+	public static final int HTTP_CACHE_SIZE = 50 * 1024 * 1024;//HTTP的缓存
+	public static final int HTTP_CONNECT_TIMEOUT = 1000 * 6;
+	public static final int HTTP_READ_TIMEOUT = 1000 * 6;
 }

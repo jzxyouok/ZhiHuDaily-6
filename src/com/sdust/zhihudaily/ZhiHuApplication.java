@@ -23,6 +23,10 @@ public class ZhiHuApplication extends Application{
 		
 	}
 	
+	
+	public static Context getContext() {
+		return applicationContext;
+	}
 	public static Respository getRespository() {
 		if(sRespository == null) {
 			sRespository = new RespositoryImp(applicationContext);
