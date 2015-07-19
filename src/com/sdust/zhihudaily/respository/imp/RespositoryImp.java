@@ -31,7 +31,7 @@ public class RespositoryImp implements Respository{
 	}
 
 	@Override
-	public void getStartImage(int height,int width,final Callback<StartImage> callback,final DisplayImageOptions options) {
+	public void getStartImage(final int height,final int width,final DisplayImageOptions options,final Callback<StartImage> callback) {
 		mCacheResImp.getStartImage(height,width,new CacheRespository.Callback<StartImage>() {
 
 			@Override
@@ -48,8 +48,7 @@ public class RespositoryImp implements Respository{
 		mNetResImp.getStartImage(height,width,new NetRespository.Callback<StartImage>() {
 
 			@Override
-			public void success(StartImage t) {
-				callback.success(t);
+			public void success(StartImage startImage) {
 				mCacheResImp.saveStartImage(height, width, options, startImage);
 			}
 

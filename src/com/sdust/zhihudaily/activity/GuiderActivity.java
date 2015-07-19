@@ -37,5 +37,9 @@ public class GuiderActivity extends Activity {
     public void onAttachFragment(Fragment fragment) {
       
     }
+	
+	private void intentToMainActivity() {
+		
+	}
 
 }

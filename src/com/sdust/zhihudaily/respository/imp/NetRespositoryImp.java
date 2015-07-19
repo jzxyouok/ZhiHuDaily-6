@@ -1,4 +1,8 @@
 package com.sdust.zhihudaily.respository.imp;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+import com.sdust.zhihudaily.api.ZhiHuApi;
 import com.sdust.zhihudaily.bean.StartImage;
 import com.sdust.zhihudaily.respository.interfaces.*;
 /**
@@ -10,8 +14,22 @@ public class NetRespositoryImp implements NetRespository{
 
 	@Override
 	public void getStartImage(int height, int width,
-			Callback<StartImage> callback) {
+			final Callback<StartImage> callback) {
 		
+		ZhiHuApi.createApi().getStartImage(width, height, new retrofit.Callback<StartImage>() {
+      
+
+			@Override
+			public void success(StartImage startImage, Response response) {
+				callback.success(startImage);
+			}
+			
+			@Override
+			public void failure(RetrofitError error) {
+				callback.failure(error);
+			}
+
+        });
 		
 	}
 

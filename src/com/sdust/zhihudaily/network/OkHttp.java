@@ -20,6 +20,7 @@ public class OkHttp {
                 okHttpClient.setCache(new Cache(FileUtils.getHttpCacheDir(context), Constants.HTTP_CACHE_SIZE));
                 okHttpClient.setConnectTimeout(Constants.HTTP_CONNECT_TIMEOUT, TimeUnit.MILLISECONDS);
                 okHttpClient.setReadTimeout(Constants.HTTP_READ_TIMEOUT, TimeUnit.MILLISECONDS);
+                okHttpClient.networkInterceptors().add(new CacheInterceptor());
             }
         }
         return okHttpClient;

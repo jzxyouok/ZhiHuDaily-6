@@ -2,6 +2,7 @@ package com.sdust.zhihudaily.api;
 
 import com.google.gson.GsonBuilder;
 import com.sdust.zhihudaily.ZhiHuApplication;
+import com.sdust.zhihudaily.network.OkHttp;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;

@@ -8,10 +8,6 @@ import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.bean.StartImage;
 import com.sdust.zhihudaily.respository.interfaces.Respository;
 import com.sdust.zhihudaily.util.SystemUtils;
-
-
-
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -80,7 +76,7 @@ public class StartFragment extends Fragment{
 	}
 	
 	private void loadImage() {
-		ZhiHuApplication.getRespository().getStartImage(mHeight,mWidth,new Respository.Callback<StartImage>() {
+		ZhiHuApplication.getRespository().getStartImage(mHeight,mWidth,mOptions,new Respository.Callback<StartImage>() {
 
 			@Override
 			public void success(StartImage image) {

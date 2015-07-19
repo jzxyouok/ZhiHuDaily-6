@@ -9,6 +9,9 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.sdust.zhihudaily.bean.StartImage;
 import com.sdust.zhihudaily.respository.interfaces.CacheRespository;
 import com.sdust.zhihudaily.util.SharedPrefUtils;
@@ -37,9 +40,22 @@ public class CacheRespositoryImp implements CacheRespository{
 		}
 		
 	}
-
+	@Override
+	public void saveStartImage(int width, int height,
+			DisplayImageOptions options, StartImage startImage) {
+		 String oldJsonStr = SharedPrefUtils.getStartJson(mContext);
+	     StartImage old = new Gson().fromJson(oldJsonStr, StartImage.class);
+	      
+		if(old != null && !old.equals(startImage)) {
+			SharedPrefUtils.setStartJson(mContext, new Gson().toJson(startImage));
+			//如果和之前的不一样时，将其缓存下来。留作下次的开始界面
+			ImageLoader.getInstance().loadImage(startImage.getImg(), new ImageSize(width, height), options, null);
+		}
+	}
 
 	private Exception getException(Class clazz) {
         return new Exception(clazz.getSimpleName() + " cache not found!");
     }
+
+	
 }

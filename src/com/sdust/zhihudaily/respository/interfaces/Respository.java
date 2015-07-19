@@ -15,8 +15,6 @@ import android.provider.MediaStore.Video;
  * 类名：Respository 说明：
  */
 public interface Respository {
-	
-
 
 	public interface Callback<T> {
 		public void success(T t);
@@ -24,7 +22,6 @@ public interface Respository {
 		public void failure(Exception e);
 	}
 
-
-	void getStartImage(int height, int width, Callback<StartImage> callback,
-			DisplayImageOptions options);
+	void getStartImage(int height, int width, DisplayImageOptions options,
+			Callback<StartImage> callback);
 }
