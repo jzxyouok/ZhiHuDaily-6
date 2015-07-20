@@ -17,13 +17,12 @@ import com.sdust.zhihudaily.respository.interfaces.CacheRespository;
 import com.sdust.zhihudaily.util.SharedPrefUtils;
 
 /**
- * 类名：CacheRespositoryImp
- * 说明：
+ * 类名：CacheRespositoryImp 说明：
  */
-public class CacheRespositoryImp implements CacheRespository{
-	
+public class CacheRespositoryImp implements CacheRespository {
+
 	private Context mContext;
-	
+
 	public CacheRespositoryImp(Context context) {
 		mContext = context;
 	}
@@ -32,30 +31,33 @@ public class CacheRespositoryImp implements CacheRespository{
 	public void getStartImage(int width, int height,
 			Callback<StartImage> callback) {
 		String startOldJsonStr = SharedPrefUtils.getStartJson(mContext);
-		if(!TextUtils.isEmpty(startOldJsonStr)) {
-			 StartImage startImage = new Gson().fromJson(startOldJsonStr, StartImage.class);
-	         callback.success(startImage);
-		}else{
-			 callback.failure(getException(StartImage.class));
+		if (!TextUtils.isEmpty(startOldJsonStr)) {
+			StartImage startImage = new Gson().fromJson(startOldJsonStr,
+					StartImage.class);
+			callback.success(startImage);
+		} else {
+			callback.failure(getException(StartImage.class));
 		}
-		
+
 	}
+
 	@Override
 	public void saveStartImage(int width, int height,
 			DisplayImageOptions options, StartImage startImage) {
-		 String oldJsonStr = SharedPrefUtils.getStartJson(mContext);
-	     StartImage old = new Gson().fromJson(oldJsonStr, StartImage.class);
-	      
-		if(old != null && !old.equals(startImage)) {
-			SharedPrefUtils.setStartJson(mContext, new Gson().toJson(startImage));
-			//如果和之前的不一样时，将其缓存下来。留作下次的开始界面
-			ImageLoader.getInstance().loadImage(startImage.getImg(), new ImageSize(width, height), options, null);
+		String oldJsonStr = SharedPrefUtils.getStartJson(mContext);
+		StartImage old = new Gson().fromJson(oldJsonStr, StartImage.class);
+
+		if (old == null || !startImage.getImg().equals(old.getImg())) {
+			SharedPrefUtils.setStartJson(mContext,
+					new Gson().toJson(startImage));
+			// 如果和之前的不一样时，将其缓存下来。留作下次的开始界面
+			ImageLoader.getInstance().loadImage(startImage.getImg(),
+					new ImageSize(width, height), options, null);
 		}
 	}
 
 	private Exception getException(Class clazz) {
-        return new Exception(clazz.getSimpleName() + " cache not found!");
-    }
+		return new Exception(clazz.getSimpleName() + " cache not found!");
+	}
 
-	
 }

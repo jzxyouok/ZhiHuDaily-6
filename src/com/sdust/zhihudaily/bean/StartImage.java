@@ -27,9 +27,12 @@ public class StartImage {
 		this.img = img;
 	}
 	
-	public boolean isValueEquals(StartImage startImage) {
-        return this.text.equals(startImage.getText()) && this.img.equals(startImage.getImg());
-    }
+	@Override
+	public boolean equals(Object o) {
+		StartImage startImage = (StartImage)o;
+		return this.text.equals(startImage.getText()) && this.img.equals(startImage.getImg());
+	}
+	
 	
 
 }

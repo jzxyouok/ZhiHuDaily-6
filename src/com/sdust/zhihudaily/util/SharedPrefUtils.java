@@ -30,7 +30,7 @@ public class SharedPrefUtils {
 	 
 	 public static void setStartJson(Context context,String value) {
 		 SharedPreferences sp = getDefaultSharedPreferences(context);
-		 sp.edit().putString(SHARED_PREF_START_JSON, value);
+		 sp.edit().putString(SHARED_PREF_START_JSON, value).commit();
 	 }
 
 	
