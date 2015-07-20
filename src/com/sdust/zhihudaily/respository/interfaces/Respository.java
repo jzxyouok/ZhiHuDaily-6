@@ -22,6 +22,6 @@ public interface Respository {
 		public void failure(Exception e);
 	}
 
-	void getStartImage(int height, int width, DisplayImageOptions options,
+	void getStartImage(int width, int height, DisplayImageOptions options,
 			Callback<StartImage> callback);
 }

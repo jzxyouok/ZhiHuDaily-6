@@ -13,8 +13,11 @@ import com.sdust.zhihudaily.bean.StartImage;
  */
 public interface CacheRespository {
 
-	void getStartImage(int height,int width,Callback<StartImage> callback);
-	 void saveStartImage(int width, int height, DisplayImageOptions options, StartImage startImage);
+	void getStartImage(int width, int height, Callback<StartImage> callback);
+
+	void saveStartImage(int width, int height, DisplayImageOptions options,
+			StartImage startImage);
+
 	public interface Callback<T> {
 		public void success(T t);
 

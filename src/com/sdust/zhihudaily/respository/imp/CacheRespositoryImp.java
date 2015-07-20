@@ -29,7 +29,7 @@ public class CacheRespositoryImp implements CacheRespository{
 	}
 
 	@Override
-	public void getStartImage(int height, int width,
+	public void getStartImage(int width, int height,
 			Callback<StartImage> callback) {
 		String startOldJsonStr = SharedPrefUtils.getStartJson(mContext);
 		if(!TextUtils.isEmpty(startOldJsonStr)) {

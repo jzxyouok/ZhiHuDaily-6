@@ -19,7 +19,7 @@ public class ZhiHuApplication extends Application{
 	public void onCreate() {
 		super.onCreate();
 		applicationContext = getApplicationContext();
-		
+		initImageLoader(getApplicationContext());
 		
 	}
 	

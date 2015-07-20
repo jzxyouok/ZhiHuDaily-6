@@ -13,7 +13,7 @@ import com.sdust.zhihudaily.respository.interfaces.*;
 public class NetRespositoryImp implements NetRespository{
 
 	@Override
-	public void getStartImage(int height, int width,
+	public void getStartImage(int width, int height,
 			final Callback<StartImage> callback) {
 		
 		ZhiHuApi.createApi().getStartImage(width, height, new retrofit.Callback<StartImage>() {

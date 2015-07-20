@@ -14,7 +14,7 @@ import android.os.Environment;
  * 类名：FileUtils 说明：
  */
 public class FileUtils {
-	private static final String HTTP_CACHE_DIR = "httpcache";
+	private static final String HTTP_CACHE_DIR = "http";
 
 	public static File getHttpCacheDir(Context context) {
 		// 判断SD卡是否存在，并且是否具有读写权限

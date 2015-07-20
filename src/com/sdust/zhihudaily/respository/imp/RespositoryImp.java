@@ -26,13 +26,13 @@ public class RespositoryImp implements Respository{
 	private Context mContext;
 	public RespositoryImp(Context context) {
 		mContext = context;
-		mCacheResImp = new CacheRespositoryImp(mContext);
+		mCacheResImp = new CacheRespositoryImp(context);
 		mNetResImp = new NetRespositoryImp();
 	}
 
 	@Override
-	public void getStartImage(final int height,final int width,final DisplayImageOptions options,final Callback<StartImage> callback) {
-		mCacheResImp.getStartImage(height,width,new CacheRespository.Callback<StartImage>() {
+	public void getStartImage(final int width,final int height,final DisplayImageOptions options,final Callback<StartImage> callback) {
+		mCacheResImp.getStartImage(width,height,new CacheRespository.Callback<StartImage>() {
 
 			@Override
 			public void success(StartImage image) {
@@ -45,11 +45,11 @@ public class RespositoryImp implements Respository{
 			}
 		});
 		
-		mNetResImp.getStartImage(height,width,new NetRespository.Callback<StartImage>() {
+		mNetResImp.getStartImage(width,height,new NetRespository.Callback<StartImage>() {
 
 			@Override
 			public void success(StartImage startImage) {
-				mCacheResImp.saveStartImage(height, width, options, startImage);
+				mCacheResImp.saveStartImage(width, height, options, startImage);
 			}
 
 			@Override

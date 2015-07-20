@@ -5,10 +5,20 @@
  */
 package com.sdust.zhihudaily.activity;
 
+import com.sdust.zhihudaily.R;
+
+import android.app.Activity;
+import android.os.Bundle;
+
 /**
  * 类名：MainActivity
  * 说明：
  */
-public class MainActivity {
+public class MainActivity extends Activity{
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+	}
 
 }
