@@ -9,6 +9,7 @@ import android.content.Context;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.bean.StartImage;
+import com.sdust.zhihudaily.bean.Themes;
 import com.sdust.zhihudaily.repository.interfaces.CacheRepository;
 import com.sdust.zhihudaily.repository.interfaces.NetRepository;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
@@ -19,20 +20,20 @@ import com.sdust.zhihudaily.repository.interfaces.Repository;
  */
 public class RepositoryImp implements Repository{
 	
-	private CacheRepository mCacheResImp;
+	private CacheRepository mCacheRepImp;
 	
-	private NetRepository mNetResImp;
+	private NetRepository mNetRepImp;
 	
 	private Context mContext;
 	public RepositoryImp(Context context) {
 		mContext = context;
-		mCacheResImp = new CacheRepositoryImp(context);
-		mNetResImp = new NetRepositoryImp();
+		mCacheRepImp = new CacheRepositoryImp(context);
+		mNetRepImp = new NetRepositoryImp();
 	}
 
 	@Override
 	public void getStartImage(final int width,final int height,final DisplayImageOptions options,final Callback<StartImage> callback) {
-		mCacheResImp.getStartImage(width,height,new CacheRepository.Callback<StartImage>() {
+		mCacheRepImp.getStartImage(width,height,new CacheRepository.Callback<StartImage>() {
 
 			@Override
 			public void success(StartImage image) {
@@ -45,17 +46,35 @@ public class RepositoryImp implements Repository{
 			}
 		});
 		
-		mNetResImp.getStartImage(width,height,new NetRepository.Callback<StartImage>() {
+		mNetRepImp.getStartImage(width,height,new NetRepository.Callback<StartImage>() {
 
 			@Override
-			public void success(StartImage startImage) {
-				mCacheResImp.saveStartImage(width, height, options, startImage);
+			public void success(StartImage startImage,String url) {
+				mCacheRepImp.saveStartImage(width, height, options, startImage);
 			}
 
 			@Override
-			public void failure(Exception e) {
+			public void failure(Exception e,String url) {
 				callback.failure(e);
 			}
+		});
+	}
+
+	@Override
+	public void getThemes(final Callback<Themes> callback) {
+		mNetRepImp.getThemes(new NetRepository.Callback<Themes>() {
+			
+			@Override
+			public void success(Themes t,String url) {
+				callback.success(t);
+			}
+			
+			@Override
+			public void failure(Exception e,String url) {
+				callback.failure(e);
+			}
+
+		
 		});
 	}
 

@@ -7,6 +7,7 @@ package com.sdust.zhihudaily.repository.interfaces;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.bean.StartImage;
+import com.sdust.zhihudaily.bean.Themes;
 import com.sdust.zhihudaily.repository.interfaces.Repository.Callback;
 
 import android.provider.MediaStore.Video;
@@ -24,4 +25,6 @@ public interface Repository {
 
 	void getStartImage(int width, int height, DisplayImageOptions options,
 			Callback<StartImage> callback);
+	
+	void getThemes(Callback<Themes> themes);
 }
