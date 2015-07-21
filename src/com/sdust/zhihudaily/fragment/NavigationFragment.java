@@ -4,13 +4,17 @@ import com.sdust.zhihudaily.NavigationDrawerCallback;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.sdust.zhihudaily.R;
+import com.sdust.zhihudaily.adapter.NavigationAdapter;
 public class NavigationFragment extends Fragment implements NavigationDrawerCallback{
-		private RecyclerView recyclerView;
-	
+		private RecyclerView mRecyclerView;
+		private NavigationAdapter mAdapter;
 	  @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -18,11 +22,11 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
 	    }
 	  
 	  @Override
-	    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+	    public void onViewCreated(View view, Bundle savedInstanceState) {
 	        super.onViewCreated(view, savedInstanceState);
-	        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-	        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-	        recyclerView.setAdapter(mAdapter);
+	        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+	        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+	        mRecyclerView.setAdapter(mAdapter);
 	    }
 	  
 	  @Override
