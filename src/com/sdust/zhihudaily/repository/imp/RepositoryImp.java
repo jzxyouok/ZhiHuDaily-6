@@ -67,6 +67,7 @@ public class RepositoryImp implements Repository{
 			@Override
 			public void success(Themes t,String url) {
 				callback.success(t);
+				mCacheRepImp.saveThemes(t,url);
 			}
 			
 			@Override
