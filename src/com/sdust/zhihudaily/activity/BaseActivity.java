@@ -27,7 +27,6 @@ public abstract  class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewLayoutId());
         mActionBarToolbar = (Toolbar) findViewById(R.id.actionbarToolbar);
-      
         setupActionBar();
     }
 

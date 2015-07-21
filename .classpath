@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="libs/okhttp-2.3.0.jar"/>
 	<classpathentry kind="lib" path="libs/okio-1.3.0.jar"/>
 	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="libs/android-support-v7-recyclerview.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
