@@ -4,8 +4,8 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.sdust.zhihudaily.respository.imp.RespositoryImp;
-import com.sdust.zhihudaily.respository.interfaces.Respository;
+import com.sdust.zhihudaily.repository.imp.RepositoryImp;
+import com.sdust.zhihudaily.repository.interfaces.Repository;
 
 import android.app.Application;
 import android.content.Context;
@@ -14,7 +14,7 @@ public class ZhiHuApplication extends Application{
 	
 	private static Context applicationContext;
 	
-	private static Respository sRespository;
+	private static Repository sRepository;
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -27,11 +27,11 @@ public class ZhiHuApplication extends Application{
 	public static Context getContext() {
 		return applicationContext;
 	}
-	public static Respository getRespository() {
-		if(sRespository == null) {
-			sRespository = new RespositoryImp(applicationContext);
+	public static Repository getRepository() {
+		if(sRepository == null) {
+			sRepository = new RepositoryImp(applicationContext);
 		}
-		return sRespository;
+		return sRepository;
 	}
 	
 	

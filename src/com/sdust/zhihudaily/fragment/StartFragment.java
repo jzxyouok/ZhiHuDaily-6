@@ -5,8 +5,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.bean.StartImage;
-import com.sdust.zhihudaily.respository.interfaces.Respository;
+import com.sdust.zhihudaily.repository.interfaces.Repository;
 import com.sdust.zhihudaily.util.SystemUtils;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -72,8 +73,8 @@ public class StartFragment extends Fragment {
 	}
 
 	private void loadImage() {
-		ZhiHuApplication.getRespository().getStartImage(mWidth, mHeight,
-				mOptions, new Respository.Callback<StartImage>() {
+		ZhiHuApplication.getRepository().getStartImage(mWidth, mHeight,
+				mOptions, new Repository.Callback<StartImage>() {
 
 					@Override
 					public void success(StartImage image) {

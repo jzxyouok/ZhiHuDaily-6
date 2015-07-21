@@ -32,7 +32,6 @@ public class NavigationAdapter extends
 
 	public NavigationAdapter() {
 		mThemes = new ArrayList<Theme>();
-
 	}
 
 	public static final class Type {
