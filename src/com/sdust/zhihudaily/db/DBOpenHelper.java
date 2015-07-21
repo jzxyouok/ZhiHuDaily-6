@@ -1,30 +1,26 @@
 package com.sdust.zhihudaily.db;
 
+import com.sdust.zhihudaily.Constants;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.aspsine.zhihu.daily.Constants;
-import com.aspsine.zhihu.daily.util.L;
+
 
 
 public class DBOpenHelper extends SQLiteOpenHelper {
-    private static final String TAG = "Database";
 
     private static final int DB_VERSION = Constants.DATABASE_VERSION;
     private static final String DB_NAME = Constants.DATABASE_NAME;
 
     private static DBOpenHelper sDBOpenHelper;
-    /**
-     * Creates underlying database table using DAOs.
-     */
+
     private void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
         CacheDao.createTable(db, ifNotExists);
     }
 
-    /**
-     * Drops underlying database table using DAOs.
-     */
+   
     private void dropAllTables(SQLiteDatabase db, boolean ifExists) {
         CacheDao.dropTable(db, ifExists);
     }
@@ -46,13 +42,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        L.i(TAG, "Creating tables for DB version " + DB_VERSION);
         createAllTables(db, false);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        L.i(TAG, "Upgrading DB from version " + oldVersion + " to " + newVersion + " by dropping all tables");
         dropAllTables(db, true);
         onCreate(db);
     }

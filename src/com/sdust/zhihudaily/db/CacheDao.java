@@ -1,5 +1,7 @@
 package com.sdust.zhihudaily.db;
 
+import com.sdust.zhihudaily.bean.HTTPCache;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,7 +11,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class CacheDao {
     private DBOpenHelper mHelper;
-
+    public static final String TABLE_NAME = HTTPCache.class.getSimpleName();
+    
     public CacheDao(Context context) {
         mHelper = DBOpenHelper.getInstance(context);
     }
