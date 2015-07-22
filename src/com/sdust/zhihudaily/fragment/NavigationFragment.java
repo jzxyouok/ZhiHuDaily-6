@@ -7,16 +7,18 @@ import com.sdust.zhihudaily.ZhiHuApplication;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Fragment;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toolbar;
 
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.adapter.NavigationAdapter;
@@ -34,7 +36,7 @@ public class NavigationFragment extends Fragment implements
 	private boolean mFromSavedInstance;
 	private View mFragmentContainerView;
 	private List<Theme> mThemes;
-	
+	private ActionBarDrawerToggle mDrawerToggle;
 	private static final String STATE_SELECTED_POSITION = "selected_navigation_position";
 
 	@Override
@@ -123,6 +125,73 @@ public class NavigationFragment extends Fragment implements
 					}
 
 				});
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	public static int getDefaultNavDrawerItem() {
+		return 0;
+	}
+
+	public void selectItem(int position) {
+		if (position == mCurrentSelectedPosition) {
+			closeDrawer();
+			return;
+		}
+		mAdapter.selectPosition(position);
+	}
+
+	public void setup(int fragmentId, DrawerLayout drawerLayout, Toolbar toolbar) {
+		mFragmentContainerView = getActivity().findViewById(fragmentId);
+		mDrawerLayout = drawerLayout;
+		mDrawerLayout.setStatusBarBackground(R.color.style_color_primary);
+
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
+				GravityCompat.START);
+
+		mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout,
+				toolbar, R.string.navigation_drawer_open,
+				R.string.navigation_drawer_close) {
+			@Override
+			public void onDrawerClosed(View drawerView) {
+				super.onDrawerClosed(drawerView);
+				if (!isAdded())
+					return;
+				getActivity().supportInvalidateOptionsMenu();
+			}
+
+			@Override
+			public void onDrawerOpened(View drawerView) {
+				super.onDrawerOpened(drawerView);
+				if (!isAdded())
+					return;
+				/*
+				 * if (!mUserLearnedDrawer) { mUserLearnedDrawer = true;
+				 * SharedPrefUtils.markUserLearnedDrawer(getActivity()); }
+				 */
+				getActivity().supportInvalidateOptionsMenu(); // calls
+
+			}
+		};
+
+		mDrawerLayout.post(new Runnable() {
+			@Override
+			public void run() {
+				mDrawerToggle.syncState();
+			}
+		});
+
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 
 }
