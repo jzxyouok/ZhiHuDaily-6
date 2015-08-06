@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.CacheRepository;
 import com.sdust.zhihudaily.util.SharedPrefUtils;
 
@@ -51,6 +52,17 @@ public class CacheRepositoryImp implements CacheRepository {
                     new ImageSize(width, height), options, null);
         }
     }
+
+    @Override
+    public void getThemes(String url, Callback<Themes> callback) {
+        getDataObject(url, Themes.class, callback);
+    }
+
+    @Override
+    public void saveThemes(Themes themes, String url) {
+        saveCacheToDB(themes, url);
+    }
+
 
     private Exception getException(Class clazz) {
         return new Exception(clazz.getSimpleName() + " cache not found!");

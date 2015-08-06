@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.CacheRepository;
 import com.sdust.zhihudaily.repository.interfaces.NetRepository;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
@@ -14,20 +15,20 @@ import com.sdust.zhihudaily.repository.interfaces.Repository;
  */
 public class RepositoryImp implements Repository {
 	
-	private CacheRepository mCacheResImp;
+	private CacheRepository mCacheReImp;
 	
-	private NetRepository mNetResImp;
+	private NetRepository mNetReImp;
 	
 	private Context mContext;
 	public RepositoryImp(Context context) {
 		mContext = context;
-		mCacheResImp = new CacheRepositoryImp(context);
-		mNetResImp = new NetRepositoryImp();
+		mCacheReImp = new CacheRepositoryImp(context);
+		mNetReImp = new NetRepositoryImp();
 	}
 
 	@Override
 	public void getStartImage(final int width,final int height,final DisplayImageOptions options,final Callback<StartImage> callback) {
-		mCacheResImp.getStartImage(new CacheRepository.Callback<StartImage>() {
+		mCacheReImp.getStartImage(new CacheRepository.Callback<StartImage>() {
 
 			@Override
 			public void success(StartImage image) {
@@ -40,11 +41,11 @@ public class RepositoryImp implements Repository {
 			}
 		});
 		
-		mNetResImp.getStartImage(width,height,new NetRepository.Callback<StartImage>() {
+		mNetReImp.getStartImage(width,height,new NetRepository.Callback<StartImage>() {
 
 			@Override
 			public void success(StartImage startImage,String url) {
-				mCacheResImp.saveStartImage(width, height, options, startImage);
+				mCacheReImp.saveStartImage(width, height, options, startImage);
 			}
 
 			@Override
@@ -53,5 +54,31 @@ public class RepositoryImp implements Repository {
 			}
 		});
 	}
+	@Override
+	public void getThemes(final Callback<Themes> callback) {
+		mNetReImp.getThemes(new NetRepository.Callback<Themes>() {
+			@Override
+			public void success(Themes themes, String url) {
+				callback.success(themes, false);
+				mCacheReImp.saveThemes(themes, url);
+			}
+
+			@Override
+			public void failure(final Exception error, String url) {
+				mCacheReImp.getThemes(url, new CacheRepository.Callback<Themes>() {
+					@Override
+					public void success(Themes themes) {
+						callback.success(themes, false);
+					}
+
+					@Override
+					public void failure(Exception e) {
+						callback.failure(error);
+					}
+				});
+			}
+		});
+	}
+
 
 }

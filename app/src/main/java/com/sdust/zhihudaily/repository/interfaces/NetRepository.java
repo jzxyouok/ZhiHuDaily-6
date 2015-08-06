@@ -6,12 +6,14 @@
 package com.sdust.zhihudaily.repository.interfaces;
 
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Themes;
 
 /**
  * ����NetRepository ˵����
  */
 public interface NetRepository {
 	void getStartImage(int width,int height,Callback<StartImage> callback);
+	void getThemes(Callback<Themes> callback);
 
 	public interface Callback<T> {
 		public void success(T t,String url);

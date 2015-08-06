@@ -35,15 +35,16 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
     private NavigationDrawerCallbacks mCallbacks;
 
 
-    private ActionBarDrawerToggle mDrawerToggle;
 
+    private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private View mFragmentContainerView;
-
+    private RecyclerView mRecyclerView;
     private int mCurrentSelectedPosition = -1;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
     private NavigationDrawerAdapter mDrawerAdapter;
+
     private List<Theme> mThemes;
 
     @Override
@@ -73,8 +74,6 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
         return inflater.inflate(R.layout.fragment_navigation, container, false);
     }
 
-    private RecyclerView mRecyclerView;
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -94,6 +93,13 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
         if (mCallbacks != null) {
             mCallbacks.onNavigationDrawerItemSelected(position);
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+        refresh();
     }
 
 
@@ -159,6 +165,9 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
+    }
+    private void refresh() {
+
     }
 
 }

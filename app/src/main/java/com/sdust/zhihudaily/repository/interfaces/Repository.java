@@ -7,6 +7,7 @@ package com.sdust.zhihudaily.repository.interfaces;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Themes;
 
 
 public interface Repository {
@@ -16,6 +17,7 @@ public interface Repository {
 
 		public void failure(Exception e);
 	}
+	void getThemes(Callback<Themes> callback);
 
 	void getStartImage(int width, int height, DisplayImageOptions options,
 			Callback<StartImage> callback);
