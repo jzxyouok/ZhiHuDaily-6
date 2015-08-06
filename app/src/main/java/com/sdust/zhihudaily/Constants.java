@@ -1,18 +1,19 @@
 /**
- * ÎÄ¼þÃû£ºConstants.java
- * Ê±¼ä£º2015Äê7ÔÂ19ÈÕÉÏÎç10:55:28
- * ×÷Õß£ºKevin
+ * ï¿½Ä¼ï¿½ï¿½ï¿½Constants.java
+ * Ê±ï¿½ä£º2015ï¿½ï¿½7ï¿½ï¿½19ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½10:55:28
+ * ï¿½ï¿½ï¿½ß£ï¿½Kevin
  */
 package com.sdust.zhihudaily;
 
 /**
- * ÀàÃû£ºConstants
- * ËµÃ÷£º³£Á¿
+ * ï¿½ï¿½ï¿½ï¿½Constants
+ * Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 public class Constants {
-	public static final int IMAGE_CACHE_SIZE = 50 * 1024 * 1024;//Í¼Æ¬µÄ»º´æ
-	public static final int HTTP_CACHE_SIZE = 50 * 1024 * 1024;//HTTPµÄ»º´æ
-	public static final int HTTP_CONNECT_TIMEOUT = 1000 * 6;//HTTPÁ¬½Ó³¬Ê±
-	public static final int HTTP_READ_TIMEOUT = 1000 * 6;//HTTP¶ÁÈ¡³¬Ê±
+
+	public static final int IMAGE_CACHE_SIZE = 50 * 1024 * 1024;//Í¼Æ¬ï¿½Ä»ï¿½ï¿½ï¿½
+	public static final int HTTP_CACHE_SIZE = 50 * 1024 * 1024;//HTTPï¿½Ä»ï¿½ï¿½ï¿½
+	public static final int HTTP_CONNECT_TIMEOUT = 1000 * 6;//HTTPï¿½ï¿½ï¿½Ó³ï¿½Ê±
+	public static final int HTTP_READ_TIMEOUT = 1000 * 6;//HTTPï¿½ï¿½È¡ï¿½ï¿½Ê±
 	
 }
