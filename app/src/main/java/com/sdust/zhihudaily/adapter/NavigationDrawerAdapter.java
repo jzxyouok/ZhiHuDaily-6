@@ -18,11 +18,13 @@ import java.util.List;
 
 /**
  * Created by Kevin on 2015/8/5.
+ * NavigationDrawer RecycleView的适配器
  */
 public class NavigationDrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = NavigationDrawerAdapter.class.getSimpleName();
-    private NavigationDrawerCallbacks mDrawerCallbacks;
+
+    private NavigationDrawerCallbacks mDrawerCallbacks;//NavigationFragment的引用
     private int mSelectedPosition = -1;
     private List<Theme> mThemes;
 
@@ -141,7 +143,9 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<RecyclerView.V
         this.mDrawerCallbacks = callback;
     }
 
-
+    /**
+     * 知乎日报图标
+     */
     public static class HeaderViewHolder extends RecyclerView.ViewHolder{
         ImageView mIvHeader;
         public HeaderViewHolder(View itemView) {
@@ -149,6 +153,10 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mIvHeader = (ImageView) itemView.findViewById(R.id.ivHeader);
         }
     }
+
+    /**
+     * Item
+     */
     
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView tvItemName;
