@@ -83,9 +83,9 @@ public class ThemeStoriesFragment extends BaseFragment {
     public void onPause() {
         L.i(TAG, "onPause");
         super.onPause();
-        if (recyclerView != null) {
+        if (mRecyclerView != null) {
             L.i(TAG, "recyclerView != null");
-            View view = recyclerView.findViewById(R.id.viewPager);
+            View view = mRecyclerView.findViewById(R.id.viewPager);
             if (view != null) {
                 L.i(TAG, "MyViewPager stopAutoScroll");
                 ((MyViewPager) view).stopAutoScroll();
