@@ -2,15 +2,12 @@ package com.sdust.zhihudaily.fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nostra13.universalimageloader.utils.L;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.adapter.DailyStoriesAdapter;
 import com.sdust.zhihudaily.widget.LoadMoreRecyclerView;
@@ -67,48 +64,24 @@ public class ThemeStoriesFragment extends BaseFragment {
     }
     @Override
     public void onResume() {
-        Log.i(TAG, "onResume");
-        super.onResume();
-        if (mRecyclerView != null) {
-            L.i(TAG, "recyclerView != null");
-            View view = mRecyclerView.findViewById(R.id.viewPager);
-            if (view != null) {
-                L.i(TAG, "MyViewPager startAutoScroll");
-                ((MyViewPager) view).startAutoScroll();
-            }
-        }
+
     }
 
     @Override
     public void onPause() {
-        L.i(TAG, "onPause");
-        super.onPause();
-        if (mRecyclerView != null) {
-            L.i(TAG, "recyclerView != null");
-            View view = mRecyclerView.findViewById(R.id.viewPager);
-            if (view != null) {
-                L.i(TAG, "MyViewPager stopAutoScroll");
-                ((MyViewPager) view).stopAutoScroll();
-            }
-        }
+
     }
     private String mTitle;
     private int lastTitlePos = -1;
     private void changeActionBarTitle(int dy) {
-        int position = mLayoutManager.findFirstVisibleItemPosition();
-        if (lastTitlePos == position) {
-            return;
-        }
-        DailyStoriesAdapter.Item item = mAdapter.getItem(position);
-        int type = item.getType();
-        if (type == DailyStoriesAdapter.Type.TYPE_HEADER) {
-            mTitle = getString(R.string.title_activity_main);
-        } else if (dy > 0 && type == DailyStoriesAdapter.Type.TYPE_DATE) {
-            mTitle = DateViewHolder.getDate(item.getDate(), getActivity());
-        } else if (dy < 0) {
-            mTitle = DateViewHolder.getDate(mAdapter.getTitleBeforePosition(position), getActivity());
-        }
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(mTitle);
-        lastTitlePos = position;
+
+    }
+
+    private void loadMore() {
+
+    }
+
+    private void refresh() {
+
     }
 }
