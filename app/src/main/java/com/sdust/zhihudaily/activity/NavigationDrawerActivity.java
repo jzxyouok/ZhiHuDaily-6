@@ -49,4 +49,16 @@ public class NavigationDrawerActivity extends BaseAppCompatActivity implements N
     public void onNavigationDrawerItemSelected(int position) {
 
     }
+    @Override
+    public void onBackPressed() {
+        if (mNavigationFragment.isDrawerOpen()) {
+            mNavigationFragment.closeDrawer();
+        } else {
+            if (mNavigationFragment.getCurrentSelectedPosition() != NavigationFragment.getDefaultNavDrawerItem()) {
+                mNavigationFragment.selectItem(NavigationFragment.getDefaultNavDrawerItem());
+            } else {
+                super.onBackPressed();
+            }
+        }
+    }
 }

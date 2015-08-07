@@ -70,7 +70,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<RecyclerView.V
                         selectPosition(holder.getLayoutPosition() - 1);
                     }
                 });
-                return new ItemViewHolder(itemView);
+                return holder;
         }
         return null;
     }

@@ -35,7 +35,9 @@ public class CacheRepositoryImp implements CacheRepository {
     private Context mContext;
     private Gson mGson;
     public CacheRepositoryImp(Context context) {
-        mContext = context;
+        this.mContext = context;
+        this.mCacheDao = new CacheDao(context);
+        this.mGson = new Gson();
     }
 
     @Override

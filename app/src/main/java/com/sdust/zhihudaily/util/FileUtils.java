@@ -1,23 +1,22 @@
 /**
- * 文件名：FileUtils.java
- * 时间：2015年7月19日下午6:18:07
- * 作者：Kevin
+ * 锟侥硷拷锟斤拷FileUtils.java
+ * 时锟戒：2015锟斤拷7锟斤拷19锟斤拷锟斤拷锟斤拷6:18:07
+ * 锟斤拷锟竭ｏ拷Kevin
  */
 package com.sdust.zhihudaily.util;
-
-import java.io.File;
 
 import android.content.Context;
 import android.os.Environment;
 
+import java.io.File;
+
 /**
- * 类名：FileUtils 说明：
+ * 锟斤拷锟斤拷FileUtils 说锟斤拷锟斤拷
  */
 public class FileUtils {
 	private static final String HTTP_CACHE_DIR = "http";
 
 	public static File getHttpCacheDir(Context context) {
-		// 判断SD卡是否存在，并且是否具有读写权限
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
 			return new File(context.getExternalCacheDir(), HTTP_CACHE_DIR);

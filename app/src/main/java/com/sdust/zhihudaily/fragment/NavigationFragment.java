@@ -43,7 +43,6 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
     private RecyclerView mRecyclerView;
     private int mCurrentSelectedPosition = -1;
     private boolean mFromSavedInstanceState;
-    private boolean mUserLearnedDrawer;
     private NavigationDrawerAdapter mDrawerAdapter;
 
     private List<Theme> mThemes;
@@ -137,17 +136,13 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                if (!isAdded())
-                    return;
-                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if (!isAdded())
-                    return;
-                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+
             }
         };
 
@@ -191,6 +186,22 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
 
     public String getTitle(int sectionNumber) {
         return sectionNumber == 0 ? getString(R.string.title_activity_main) : mThemes.get(sectionNumber - 1).getName();
+    }
+
+    public int getCurrentSelectedPosition() {
+        return  mCurrentSelectedPosition;
+    }
+
+    public static int getDefaultNavDrawerItem() {
+        return 0;
+    }
+
+    public void selectItem(int position) {
+        if (position == mCurrentSelectedPosition) {
+            closeDrawer();
+            return;
+        }
+        mDrawerAdapter.selectPosition(position);
     }
 
 }
