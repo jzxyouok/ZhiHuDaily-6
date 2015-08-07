@@ -1,6 +1,7 @@
 package com.sdust.zhihudaily.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +58,22 @@ public class DailyStoriesFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 refresh();
+            }
+        });
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mRecyclerView.setAdapter(mAdapter);
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!isDataLoaded) {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    refresh();
+                }
             }
         });
     }

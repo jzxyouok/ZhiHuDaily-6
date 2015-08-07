@@ -6,6 +6,7 @@
 package com.sdust.zhihudaily.repository.interfaces;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
 import com.sdust.zhihudaily.model.Themes;
 
@@ -21,4 +22,8 @@ public interface Repository {
 
 	void getStartImage(int width, int height, DisplayImageOptions options,
 			Callback<StartImage> callback);
+	void getLatestDailyStories(Callback<DailyStories> callback);
+
+	void getBeforeDailyStories(String date, Callback<DailyStories> callback);
+
 }
