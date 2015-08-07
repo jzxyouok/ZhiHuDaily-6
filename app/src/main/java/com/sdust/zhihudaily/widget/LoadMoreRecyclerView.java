@@ -4,7 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
+
+import com.sdust.zhihudaily.util.LogUtils;
 
 
 public class LoadMoreRecyclerView extends RecyclerView {
@@ -43,7 +44,7 @@ public class LoadMoreRecyclerView extends RecyclerView {
             int itemCount = layoutManager.getItemCount();
             if (lastVisibleItem >= itemCount - 1 && !view.getLoadingMore()) {
                 onLoadMoreListener.onLoadMore();
-                Log.i(TAG, "load more: lastVisibleItem = " + lastVisibleItem + ", itemCount" + itemCount);
+                LogUtils.i(TAG, "load more: lastVisibleItem = " + lastVisibleItem + ", itemCount" + itemCount);
             } else {
                 super.onScrolled(recyclerView, dx, dy);
             }

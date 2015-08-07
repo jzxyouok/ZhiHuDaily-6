@@ -3,7 +3,6 @@ package com.sdust.zhihudaily.fragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.model.StartImage;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
+import com.sdust.zhihudaily.util.LogUtils;
 import com.sdust.zhihudaily.util.SystemUtils;
 
 /**
@@ -90,7 +90,7 @@ public class StartFragment extends Fragment {
 
                     @Override
                     public void failure(Exception e) {
-                        Log.i(TAG, "default image.");
+                        LogUtils.i(TAG, "default image.");
                         mStartImg.setBackgroundResource(R.drawable.bg_splash);
                         mAuthorView.setText(getResources().getString(
                                 R.string.start_text));

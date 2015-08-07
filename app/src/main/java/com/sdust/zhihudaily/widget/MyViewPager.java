@@ -6,8 +6,9 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
+
+import com.sdust.zhihudaily.util.LogUtils;
 
 
 public class MyViewPager extends ViewPager {
@@ -100,7 +101,7 @@ public class MyViewPager extends ViewPager {
         if (currentItem == count) {
             currentItem = 0;
         }
-        Log.i(TAG, currentItem + "");
+        LogUtils.i(TAG, currentItem + "");
         setCurrentItem(currentItem);
     }
 

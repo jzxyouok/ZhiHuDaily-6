@@ -3,9 +3,9 @@ package com.sdust.zhihudaily.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.sdust.zhihudaily.Constants;
+import com.sdust.zhihudaily.util.LogUtils;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String TAG = "Database";
@@ -45,13 +45,13 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.i(TAG, "Creating tables for DB version " + DB_VERSION);
+        LogUtils.i(TAG, "Creating tables for DB version " + DB_VERSION);
         createAllTables(db, false);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.i(TAG, "Upgrading DB from version " + oldVersion + " to " + newVersion + " by dropping all tables");
+        LogUtils.i(TAG, "Upgrading DB from version " + oldVersion + " to " + newVersion + " by dropping all tables");
         dropAllTables(db, true);
         onCreate(db);
     }

@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.utils.L;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.interfaces.NavigationDrawerCallbacks;
 import com.sdust.zhihudaily.model.Theme;
+import com.sdust.zhihudaily.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +126,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
 
         if (mSelectedPosition == position) {
-            L.i(TAG, "selected item = " + position);
+            LogUtils.i(TAG, "selected item = " + position);
             viewHolder.itemView.setBackgroundColor(resources.getColor(R.color.navigation_item_selected));
             viewHolder.tvItemName.setTextColor(resources.getColor(R.color.navdrawer_text_color_selected));
         } else if (position != 0) {
