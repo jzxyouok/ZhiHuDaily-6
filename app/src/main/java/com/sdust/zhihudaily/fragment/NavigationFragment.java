@@ -117,6 +117,16 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
             mDrawerLayout.closeDrawer(mFragmentContainerView);
     }
 
+    /**
+     * 获取theme的ID
+     * @param sectionNumber
+     * @return
+     */
+    public String getSectionId(int sectionNumber) {
+        return sectionNumber == 0 ? null : mThemes.get(sectionNumber - 1).getId();
+    }
+
+
 
     public void setup(int fragmentId, DrawerLayout drawerLayout, Toolbar toolbar) {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
