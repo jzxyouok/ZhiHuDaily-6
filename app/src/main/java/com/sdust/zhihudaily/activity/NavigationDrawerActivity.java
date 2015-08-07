@@ -1,8 +1,4 @@
-/**
- * �ļ���NavigationDrawerActivity.java
- * ʱ�䣺2015��7��19������8:38:59
- * ���ߣ�Kevin
- */
+
 package com.sdust.zhihudaily.activity;
 
 import android.os.Bundle;
@@ -14,8 +10,10 @@ import android.view.MenuInflater;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.fragment.NavigationFragment;
 import com.sdust.zhihudaily.interfaces.NavigationDrawerCallbacks;
-
-
+/**
+ * Created by Kevin on 2015/7/5.
+ * MainActivity
+ */
 public class NavigationDrawerActivity extends BaseAppCompatActivity implements NavigationDrawerCallbacks
 {
     private Toolbar toolbar;

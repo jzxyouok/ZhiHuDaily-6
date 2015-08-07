@@ -9,10 +9,16 @@ import android.view.MenuItem;
 
 import com.sdust.zhihudaily.R;
 
-
+/**
+ * Created by Kevin on 2015/7/15.
+ */
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
     public Toolbar mActionBarToolbar;
 
+    /**
+     * 子类复写返回layoutId
+     * @return
+     */
     protected abstract int getContentViewLayoutId();
 
     @Override

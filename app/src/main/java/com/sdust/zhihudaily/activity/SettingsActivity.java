@@ -4,7 +4,10 @@ import android.os.Bundle;
 
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.fragment.SettingsFragment;
-
+/**
+ * Created by Kevin on 2015/7/25
+ * 设置界面.
+ */
 public class SettingsActivity extends BaseAppCompatActivity {
 
     @Override

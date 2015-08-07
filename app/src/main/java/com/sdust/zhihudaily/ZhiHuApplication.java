@@ -10,14 +10,15 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.sdust.zhihudaily.repository.imp.RepositoryImp;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
 
-/*
-
+/**
+ * Created by Kevin on 2015/7/5.
+ * 复写的Application
  */
 public class ZhiHuApplication extends Application{
 	
 	private static Context applicationContext;
 	
-	private static Repository sRespository;
+	private static Repository sRespository;//全局唯一的仓库
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -36,8 +37,11 @@ public class ZhiHuApplication extends Application{
 		}
 		return sRespository;
 	}
-	
-	
+
+	/**
+	 * 配置ImageLoader
+	 * @param context
+	 */
 	 private void initImageLoader(final Context context) {
 	        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
 	                .threadPriority(Thread.NORM_PRIORITY - 2)

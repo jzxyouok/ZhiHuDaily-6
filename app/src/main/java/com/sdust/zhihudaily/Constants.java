@@ -1,19 +1,23 @@
-/**
- * �ļ���Constants.java
- * ʱ�䣺2015��7��19������10:55:28
- * ���ߣ�Kevin
- */
+
 package com.sdust.zhihudaily;
 
 /**
- * ����Constants
- * ˵��������
+ * Created by Kevin on 2015/7/5.
  */
 public class Constants {
 
-	public static final int IMAGE_CACHE_SIZE = 50 * 1024 * 1024;//ͼƬ�Ļ���
-	public static final int HTTP_CACHE_SIZE = 50 * 1024 * 1024;//HTTP�Ļ���
-	public static final int HTTP_CONNECT_TIMEOUT = 1000 * 6;//HTTP���ӳ�ʱ
-	public static final int HTTP_READ_TIMEOUT = 1000 * 6;//HTTP��ȡ��ʱ
+	/**
+	 * Datebases Constants
+	 */
+	public static final String DATABASE_NAME = "DailyDB";
+	public static final int DATABASE_VERSION = 1;
+
+	/**
+	 * HTTP Constants
+	 */
+	public static final int IMAGE_CACHE_SIZE = 50 * 1024 * 1024;//Image_Loader的图片缓存
+	public static final int HTTP_CACHE_SIZE = 50 * 1024 * 1024;//HTTP缓存
+	public static final int HTTP_CONNECT_TIMEOUT = 1000 * 6;//HTTP连接超时
+	public static final int HTTP_READ_TIMEOUT = 1000 * 6;//HTTP读取超时
 	
 }
