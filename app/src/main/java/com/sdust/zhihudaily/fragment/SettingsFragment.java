@@ -1,7 +1,6 @@
 package com.sdust.zhihudaily.fragment;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
@@ -12,9 +11,7 @@ import android.view.ViewGroup;
 
 import com.sdust.zhihudaily.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class SettingsFragment extends PreferenceFragment {
 
 

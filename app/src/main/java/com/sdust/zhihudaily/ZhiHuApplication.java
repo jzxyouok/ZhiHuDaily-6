@@ -12,7 +12,7 @@ import com.sdust.zhihudaily.repository.interfaces.Repository;
 
 /**
  * Created by Kevin on 2015/7/5.
- * 复写的Application
+ * 覆写的Application
  */
 public class ZhiHuApplication extends Application{
 	
@@ -31,7 +31,7 @@ public class ZhiHuApplication extends Application{
 	public static Context getContext() {
 		return applicationContext;
 	}
-	public static Repository getRespository() {
+	public static Repository getRepository() {
 		if(sRespository == null) {
 			sRespository = new RepositoryImp(applicationContext);
 		}

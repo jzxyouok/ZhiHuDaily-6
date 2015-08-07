@@ -7,21 +7,33 @@ package com.sdust.zhihudaily.repository.imp;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.sdust.zhihudaily.db.CacheDao;
+import com.sdust.zhihudaily.model.Cache;
 import com.sdust.zhihudaily.model.StartImage;
 import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.CacheRepository;
 import com.sdust.zhihudaily.util.SharedPrefUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class CacheRepositoryImp implements CacheRepository {
 
-    private Context mContext;
+    private static final String TAG = CacheRepositoryImp.class.getSimpleName();
 
+    private static DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+
+    private CacheDao mCacheDao;
+    private Context mContext;
+    private Gson mGson;
     public CacheRepositoryImp(Context context) {
         mContext = context;
     }
@@ -36,7 +48,6 @@ public class CacheRepositoryImp implements CacheRepository {
         } else {
             callback.failure(getException(StartImage.class));
         }
-
     }
 
     @Override
@@ -63,9 +74,21 @@ public class CacheRepositoryImp implements CacheRepository {
         saveCacheToDB(themes, url);
     }
 
-
+    private <T> void getDataObject(String url, Class<T> classOfT, CacheRepository.Callback callback) {
+        String json = mCacheDao.getCache(url).getResponse();
+        T t = mGson.fromJson(json, classOfT);
+        if (t != null) {
+            callback.success(t);
+            Log.i(TAG, "get" + classOfT.getSimpleName() + " cache");
+        } else {
+            callback.failure(getException(classOfT));
+        }
+    }
     private Exception getException(Class clazz) {
         return new Exception(clazz.getSimpleName() + " cache not found!");
     }
-
+    private void saveCacheToDB(Object o, String url) {
+        Cache cache = new Cache(url, mGson.toJson(o), Long.valueOf(df.format(Calendar.getInstance().getTimeInMillis())));
+        mCacheDao.updateCache(cache);
+    }
 }

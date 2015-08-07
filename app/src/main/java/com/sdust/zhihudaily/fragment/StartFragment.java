@@ -77,7 +77,7 @@ public class StartFragment extends Fragment {
         mStartAnim = null;
     }
     private void loadImage() {
-        ZhiHuApplication.getRespository().getStartImage(mWidth, mHeight,
+        ZhiHuApplication.getRepository().getStartImage(mWidth, mHeight,
                 mOptions, new Repository.Callback<StartImage>() {
 
                     @Override

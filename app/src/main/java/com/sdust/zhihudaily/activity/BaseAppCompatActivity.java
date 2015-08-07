@@ -16,7 +16,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     public Toolbar mActionBarToolbar;
 
     /**
-     * 子类复写返回layoutId
+     * 子类覆写返回layoutId
      * @return
      */
     protected abstract int getContentViewLayoutId();

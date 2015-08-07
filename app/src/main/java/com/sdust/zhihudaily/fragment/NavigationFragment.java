@@ -14,9 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sdust.zhihudaily.R;
+import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.adapter.NavigationDrawerAdapter;
 import com.sdust.zhihudaily.interfaces.NavigationDrawerCallbacks;
 import com.sdust.zhihudaily.model.Theme;
+import com.sdust.zhihudaily.model.Themes;
+import com.sdust.zhihudaily.repository.interfaces.Repository;
 
 import java.util.List;
 
@@ -28,12 +31,10 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
 
 
-
     /**
      * 指向NavigationActivity的引用
      */
     private NavigationDrawerCallbacks mCallbacks;
-
 
 
     private ActionBarDrawerToggle mDrawerToggle;
@@ -77,7 +78,7 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));//设置RecyclerView为竖着的
         mRecyclerView.setAdapter(mDrawerAdapter);
     }
@@ -108,11 +109,13 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
     }
 
     public void openDrawer() {
-        if (mDrawerLayout != null) mDrawerLayout.openDrawer(mFragmentContainerView);
+        if (mDrawerLayout != null)
+            mDrawerLayout.openDrawer(mFragmentContainerView);
     }
 
     public void closeDrawer() {
-        if (mDrawerLayout != null) mDrawerLayout.closeDrawer(mFragmentContainerView);
+        if (mDrawerLayout != null)
+            mDrawerLayout.closeDrawer(mFragmentContainerView);
     }
 
 
@@ -124,7 +127,7 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
 
-       mDrawerToggle = new ActionBarDrawerToggle(
+        mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
                 toolbar,                          /* nav drawer image to replace 'Up' caret */
@@ -134,14 +137,16 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                if (!isAdded()) return;
+                if (!isAdded())
+                    return;
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if (!isAdded()) return;
+                if (!isAdded())
+                    return;
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
@@ -161,13 +166,31 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
     }
+
     private void refresh() {
 
+        ZhiHuApplication.getRepository().getThemes(new Repository.Callback<Themes>() {
+            @Override
+            public void success(Themes themes, boolean outDate) {
+                mThemes = themes.getOthers();
+                mDrawerAdapter.setThemes(mThemes);
+            }
+
+            @Override
+            public void failure(Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public String getTitle(int sectionNumber) {
+        return sectionNumber == 0 ? getString(R.string.title_activity_main) : mThemes.get(sectionNumber - 1).getName();
     }
 
 }
