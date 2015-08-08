@@ -7,7 +7,6 @@ package com.sdust.zhihudaily.repository.imp;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -19,6 +18,7 @@ import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
 import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.CacheRepository;
+import com.sdust.zhihudaily.util.LogUtils;
 import com.sdust.zhihudaily.util.SharedPrefUtils;
 
 import java.text.DateFormat;
@@ -79,22 +79,22 @@ public class CacheRepositoryImp implements CacheRepository {
 
     @Override
     public void getLatestDailyStories(String url, Callback<DailyStories> callback) {
-
+        getDataObject(url, DailyStories.class, callback);
     }
 
     @Override
     public void saveLatestDailyStories(DailyStories dailyStories, String url) {
-
+        saveCacheToDB(dailyStories, url);
     }
 
     @Override
     public void getBeforeDailyStories(String url, Callback<DailyStories> callback) {
-
+        getDataObject(url, DailyStories.class, callback);
     }
 
     @Override
     public void saveBeforeDailyStories(DailyStories dailyStories, String url) {
-
+        saveCacheToDB(dailyStories, url);
     }
 
     private <T> void getDataObject(String url, Class<T> classOfT, CacheRepository.Callback callback) {
@@ -102,7 +102,7 @@ public class CacheRepositoryImp implements CacheRepository {
         T t = mGson.fromJson(json, classOfT);
         if (t != null) {
             callback.success(t);
-            Log.i(TAG, "get" + classOfT.getSimpleName() + " cache");
+            LogUtils.i(TAG, "get" + classOfT.getSimpleName() + " cache");
         } else {
             callback.failure(getException(classOfT));
         }

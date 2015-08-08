@@ -4,6 +4,7 @@ package com.sdust.zhihudaily.repository.imp;
 import android.content.Context;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
 import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.CacheRepository;
@@ -14,7 +15,7 @@ import com.sdust.zhihudaily.repository.interfaces.Repository;
  *仓库的实现类
  */
 public class RepositoryImp implements Repository {
-	
+	private static final String TAG = RepositoryImp.class.getSimpleName();
 	private CacheRepository mCacheReImp;
 	
 	private NetRepository mNetReImp;
@@ -69,6 +70,59 @@ public class RepositoryImp implements Repository {
 					@Override
 					public void success(Themes themes) {
 						callback.success(themes, false);
+					}
+
+					@Override
+					public void failure(Exception e) {
+						callback.failure(error);
+					}
+				});
+			}
+		});
+	}
+	@Override
+	public void getLatestDailyStories(final Callback<DailyStories> callback) {
+		//get data form network
+		mNetReImp.getLatestDailyStories(new NetRepository.Callback<DailyStories>() {
+			@Override
+			public void success(DailyStories dailyStories, String url) {
+				callback.success(dailyStories, false);
+				mCacheReImp.saveLatestDailyStories(dailyStories, url);
+			}
+
+			@Override
+			public void failure(final Exception error, String url) {
+				mCacheReImp.getLatestDailyStories(url, new CacheRepository.Callback<DailyStories>() {
+					@Override
+					public void success(DailyStories dailyStories) {
+						callback.success(dailyStories, true);
+					}
+
+					@Override
+					public void failure(Exception e) {
+						callback.failure(error);
+					}
+				});
+			}
+		});
+	}
+
+
+	@Override
+	public void getBeforeDailyStories(String date, final Callback<DailyStories> callback) {
+		mNetReImp.getBeforeDailyStories(date, new NetRepository.Callback<DailyStories>() {
+			@Override
+			public void success(DailyStories dailyStories, String url) {
+				callback.success(dailyStories, false);
+				mCacheReImp.saveBeforeDailyStories(dailyStories, url);
+			}
+
+			@Override
+			public void failure(final Exception error, String url) {
+				mCacheReImp.getBeforeDailyStories(url, new CacheRepository.Callback<DailyStories>() {
+					@Override
+					public void success(DailyStories dailyStories) {
+						callback.success(dailyStories, false);
 					}
 
 					@Override

@@ -92,8 +92,7 @@ public class StartFragment extends Fragment {
                     public void failure(Exception e) {
                         LogUtils.i(TAG, "default image.");
                         mStartImg.setBackgroundResource(R.drawable.bg_splash);
-                        mAuthorView.setText(getResources().getString(
-                                R.string.start_text));
+                        mAuthorView.setText("Kevin");
                         e.printStackTrace();
                     }
                 });
