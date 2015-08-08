@@ -1,8 +1,13 @@
 package com.sdust.zhihudaily.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.sdust.zhihudaily.R;
+import com.sdust.zhihudaily.adapter.holder.HeaderViewPagerHolder;
+import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.Story;
 
 import java.util.ArrayList;
@@ -25,11 +30,54 @@ public class DailyStoriesAdapter extends RecyclerView.Adapter {
         mItems = new ArrayList<Item>();
         mTmpItem = new ArrayList<Item>();
     }
+    public void setList(DailyStories dailyStories) {
+        mItems.clear();
+        appendList(dailyStories);
+    }
+    public void appendList(DailyStories dailyStories) {
+        int positionStart = mItems.size();
+
+        if (positionStart == 0) {
+            Item headerItem = new Item();
+            headerItem.setType(Type.TYPE_HEADER);
+            headerItem.setStories(dailyStories.getTopStories());
+            mItems.add(headerItem);
+        }
+        Item dateItem = new Item();
+        dateItem.setType(Type.TYPE_DATE);
+        dateItem.setDate(dailyStories.getDate());
+        mItems.add(dateItem);
+        List<Story> stories = dailyStories.getStories();
+        for (int i = 0, num = stories.size(); i < num; i++) {
+            Item storyItem = new Item();
+            storyItem.setType(Type.TYPE_STORY);
+            storyItem.setStory(stories.get(i));
+            mItems.add(storyItem);
+        }
+
+        int itemCount = mItems.size() - positionStart;
+
+        if (positionStart == 0) {
+            notifyDataSetChanged();
+        } else {
+            notifyItemRangeChanged(positionStart, itemCount);
+        }
+    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View itemView = null;
+        switch (viewType) {
+            case Type.TYPE_HEADER:
+                itemView = LayoutInflater.from(parent.getContext()).
+                    inflate(R.layout.recycler_header_viewpager, parent, false);
+                return new HeaderViewPagerHolder(itemView, mItems.get(0).getStories());
+            default:
+                return null;
+        }
     }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {

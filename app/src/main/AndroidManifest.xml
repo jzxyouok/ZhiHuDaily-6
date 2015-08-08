@@ -33,7 +33,11 @@
             android:label="@string/title_activity_main">
         </activity>
         <activity android:name=".activity.SettingsActivity"
-            android:label="@string/title_activity_settings">
+                               android:label="@string/title_activity_settings">
+
+    </activity>
+        <activity android:name=".activity.StoryActivity"
+                  android:label="@string/title_activity_story">
 
         </activity>
     </application>
