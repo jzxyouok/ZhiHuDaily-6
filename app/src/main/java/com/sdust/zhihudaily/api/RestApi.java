@@ -20,6 +20,7 @@ public class RestApi {
                     restAdapter = new RestAdapter.Builder()
                             .setEndpoint(api)
                             .setClient(new OkClient(OkHttp.createHttpClient(ZhiHuApplication.getContext())))
+                            //不导出实体中没有用@Expose注解的属性
                             .setConverter(new GsonConverter(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()))
                             .build();
                 }

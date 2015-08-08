@@ -1,17 +1,14 @@
 /**
- * 文件名：AnimationEndListener.java
- * 时间：2015年7月19日下午9:35:54
- * 作者：Kevin
+ * 锟侥硷拷锟斤拷AnimationEndListener.java
+ * 时锟戒：2015锟斤拷7锟斤拷19锟斤拷锟斤拷锟斤拷9:35:54
+ * 锟斤拷锟竭ｏ拷Kevin
  */
 package com.sdust.zhihudaily.view;
 
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 
-/**
- * 类名：AnimationEndListener
- * 说明：
- */
+
 public class AnimationEndListener implements AnimationListener{
 
 	@Override

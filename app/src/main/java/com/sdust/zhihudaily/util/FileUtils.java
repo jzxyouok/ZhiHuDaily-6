@@ -10,9 +10,7 @@ import android.os.Environment;
 
 import java.io.File;
 
-/**
- * ����FileUtils ˵����
- */
+
 public class FileUtils {
 	private static final String HTTP_CACHE_DIR = "http";
 
