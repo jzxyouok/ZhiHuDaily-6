@@ -1,4 +1,4 @@
-package com.sdust.zhihudaily.adapter;
+package com.sdust.zhihudaily.adapter.holder;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

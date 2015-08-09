@@ -95,6 +95,7 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
         }
     }
 
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -202,6 +203,21 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
         return  mCurrentSelectedPosition;
     }
 
+    /**
+     * 选择主页item上的theme选择主题，暂时没用
+     * @param t
+     */
+    public void selectTheme(Theme t) {
+        int size = 0;
+        if (mThemes != null && (size = mThemes.size()) > 0 && isAdded()) {
+            for (int i = 0; i < size; i++) {
+                if (mThemes.get(i).getId().equals(t.getId())) {
+                    selectItem(i + 1);
+                    break;
+                }
+            }
+        }
+    }
     public static int getDefaultNavDrawerItem() {
         return 0;
     }

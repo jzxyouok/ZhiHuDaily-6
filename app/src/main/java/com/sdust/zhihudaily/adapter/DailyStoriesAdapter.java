@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sdust.zhihudaily.R;
+import com.sdust.zhihudaily.adapter.holder.DateViewHolder;
 import com.sdust.zhihudaily.adapter.holder.HeaderViewPagerHolder;
+import com.sdust.zhihudaily.adapter.holder.StoryViewHolder;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.Story;
 
@@ -77,11 +79,19 @@ public class DailyStoriesAdapter extends RecyclerView.Adapter {
                 itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.recycler_item_date, parent, false);
                 return new DateViewHolder(itemView);
+            case Type.TYPE_STORY:
+                itemView =  LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.recycler_item_story, parent, false);
+                return new StoryViewHolder(itemView);
             default:
                 return null;
         }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return mItems.get(position).getType();
+    }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {

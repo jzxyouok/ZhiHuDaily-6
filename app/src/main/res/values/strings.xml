@@ -11,7 +11,7 @@
     <string name="title_activity_settings">设置</string>
     <string name="title_activity_story">详情页</string>
     <string name="recycler_item_main_today_hottest">今日热文</string>
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="recycler_item_main_select_from">选自</string>
 
 </resources>
