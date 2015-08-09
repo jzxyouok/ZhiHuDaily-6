@@ -7,4 +7,5 @@
 - [com.google.code.gson:gson:2.3.1](https://github.com/google/gson)
 - [com.squareup.retrofit:retrofit:1.9.0](https://github.com/square/retrofit)
 - [com.squareup.okhttp:okhttp:2.3.0](https://github.com/square/okhttp)
-
+- [com.nostra13.universalimageloader:universal-image-loader:1.9.3](https://github.com/nostra13/Android-Universal-Image-Loader)
+- [com.jakewharton:butterknife:6.0.0](https://github.com/JakeWharton/butterknife)
