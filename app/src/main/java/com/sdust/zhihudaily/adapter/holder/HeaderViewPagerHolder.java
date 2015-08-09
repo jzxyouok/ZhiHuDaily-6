@@ -17,6 +17,8 @@ import com.sdust.zhihudaily.widget.StoryHeaderView;
 import java.util.List;
 
 /**
+ * 实现Header的viewHolder
+ * 同时实现一个HeaderPagerAdapter
  * Created by Kevin on 2015/8/8.
  */
 public class HeaderViewPagerHolder extends RecyclerView.ViewHolder {
@@ -29,9 +31,22 @@ public class HeaderViewPagerHolder extends RecyclerView.ViewHolder {
         super(itemView);
         viewPager = (MyViewPager) itemView.findViewById(R.id.viewPager);
         indicator = (CirclePageIndicator) itemView.findViewById(R.id.indicator);
-
+        if(stories == null || stories.size() == 0)
+            return;
+        else if(stories.size() < 2) {//如果图片数量小于2的话，指示设置为不可见
+            indicator.setVisibility(View.GONE);
+        }
+        mPagerAdapter = new HeaderPagerAdapter(stories);
     }
 
+    public void bindHeaderView() {
+        if (viewPager.getAdapter() == null) {
+            viewPager.setAdapter(mPagerAdapter);
+            indicator.setViewPager(viewPager);
+        } else {
+            mPagerAdapter.notifyDataSetChanged();
+        }
+    }
     private final static class HeaderPagerAdapter extends PagerAdapter {
         private List<Story> mStories;
         private DisplayImageOptions mOptions;
@@ -59,7 +74,7 @@ public class HeaderViewPagerHolder extends RecyclerView.ViewHolder {
 
         @Override
         public Object instantiateItem(final ViewGroup container, final int position) {
-            StoryHeaderView storyHeaderView = StoryHeaderView.newInstance(container);
+            StoryHeaderView storyHeaderView =  StoryHeaderView.newInstance(container);
             final Story story = mStories.get(position);
             storyHeaderView.bindData(story.getTitle(), story.getImageSource(), story.getImage(), mOptions);
             storyHeaderView.setOnClickListener(new View.OnClickListener() {

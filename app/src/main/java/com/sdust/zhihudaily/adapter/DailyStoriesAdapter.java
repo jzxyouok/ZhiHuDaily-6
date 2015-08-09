@@ -73,6 +73,10 @@ public class DailyStoriesAdapter extends RecyclerView.Adapter {
                 itemView = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.recycler_header_viewpager, parent, false);
                 return new HeaderViewPagerHolder(itemView, mItems.get(0).getStories());
+            case Type.TYPE_DATE:
+                itemView = LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.recycler_item_date, parent, false);
+                return new DateViewHolder(itemView);
             default:
                 return null;
         }
