@@ -11,14 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.utils.L;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.adapter.DailyStoriesAdapter;
 import com.sdust.zhihudaily.adapter.holder.DateViewHolder;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
+import com.sdust.zhihudaily.util.LogUtils;
 import com.sdust.zhihudaily.widget.LoadMoreRecyclerView;
-
+import com.sdust.zhihudaily.widget.MyViewPager;
 
 public class DailyStoriesFragment extends BaseFragment {
     public static final String TAG = DailyStoriesFragment.class.getSimpleName();
@@ -38,14 +40,14 @@ public class DailyStoriesFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_daily_stories,container,false);
+        return inflater.inflate(R.layout.fragment_daily_stories, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView = (LoadMoreRecyclerView)view.findViewById(R.id.recyclerView);
+        mRecyclerView = (LoadMoreRecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(mLayoutManager);
         /**
          * 上拉加载更多，加载beforeDailyStories
@@ -61,7 +63,7 @@ public class DailyStoriesFragment extends BaseFragment {
                 changeActionBarTitle(dy);
             }
         });
-        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         /**
          * 下拉刷新，加载latestDailyStories
@@ -88,15 +90,6 @@ public class DailyStoriesFragment extends BaseFragment {
             }
         });
     }
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
 
 
     private String mTitle;
@@ -121,7 +114,33 @@ public class DailyStoriesFragment extends BaseFragment {
         lastTitlePos = position;
     }
 
+    @Override
+    public void onResume() {
+        L.i(TAG, "onResume");
+        super.onResume();
+        if (mRecyclerView != null) {
+            LogUtils.i(TAG, "recyclerView != null");
+            View view = mRecyclerView.findViewById(R.id.viewPager);
+            if (view != null) {
+                LogUtils.i(TAG, "MyViewPager startAutoScroll");
+                ((MyViewPager) view).startAutoScroll();
+            }
+        }
+    }
 
+    @Override
+    public void onPause() {
+        LogUtils.i(TAG, "onPause");
+        super.onPause();
+        if (mRecyclerView != null) {
+            LogUtils.i(TAG, "recyclerView != null");
+            View view = mRecyclerView.findViewById(R.id.viewPager);
+            if (view != null) {
+                LogUtils.i(TAG, "MyViewPager stopAutoScroll");
+                ((MyViewPager) view).stopAutoScroll();
+            }
+        }
+    }
 
     private void refresh() {
         isDataLoaded = false;
