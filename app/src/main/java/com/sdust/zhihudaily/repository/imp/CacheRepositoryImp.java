@@ -16,6 +16,7 @@ import com.sdust.zhihudaily.db.CacheDao;
 import com.sdust.zhihudaily.model.Cache;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Theme;
 import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.CacheRepository;
 import com.sdust.zhihudaily.util.LogUtils;
@@ -95,6 +96,26 @@ public class CacheRepositoryImp implements CacheRepository {
     @Override
     public void saveBeforeDailyStories(DailyStories dailyStories, String url) {
         saveCacheToDB(dailyStories, url);
+    }
+
+    @Override
+    public void getThemeStories(String url, Callback<Theme> callback) {
+
+    }
+
+    @Override
+    public void saveThemeStories(Theme theme, String url) {
+
+    }
+
+    @Override
+    public void getBeforeThemeStories(String url, Callback<Theme> callback) {
+
+    }
+
+    @Override
+    public void saveBeforeThemesStories(Theme theme, String url) {
+
     }
 
     private <T> void getDataObject(String url, Class<T> classOfT, CacheRepository.Callback callback) {

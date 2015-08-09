@@ -3,6 +3,7 @@ package com.sdust.zhihudaily.repository.imp;
 import com.sdust.zhihudaily.api.ZhiHuApi;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Theme;
 import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.NetRepository;
 import com.sdust.zhihudaily.util.LogUtils;
@@ -80,6 +81,16 @@ public class NetRepositoryImp implements NetRepository {
                 callback.failure(error, error.getUrl());
             }
         });
+    }
+
+    @Override
+    public void getThemeStories(String themeId, Callback<Theme> callback) {
+
+    }
+
+    @Override
+    public void getBeforeThemeStories(String themeId, String storyId, Callback<Theme> callback) {
+
     }
 
 }
