@@ -36,6 +36,7 @@ public class CacheRepositoryImp implements CacheRepository {
     private CacheDao mCacheDao;
     private Context mContext;
     private Gson mGson;
+
     public CacheRepositoryImp(Context context) {
         this.mContext = context;
         this.mCacheDao = new CacheDao(context);
@@ -100,22 +101,22 @@ public class CacheRepositoryImp implements CacheRepository {
 
     @Override
     public void getThemeStories(String url, Callback<Theme> callback) {
-
+        getDataObject(url, Theme.class, callback);
     }
 
     @Override
     public void saveThemeStories(Theme theme, String url) {
-
+        saveCacheToDB(theme, url);
     }
 
     @Override
     public void getBeforeThemeStories(String url, Callback<Theme> callback) {
-
+        getDataObject(url, Theme.class, callback);
     }
 
     @Override
     public void saveBeforeThemesStories(Theme theme, String url) {
-
+        saveCacheToDB(theme, url);
     }
 
     private <T> void getDataObject(String url, Class<T> classOfT, CacheRepository.Callback callback) {
@@ -128,9 +129,11 @@ public class CacheRepositoryImp implements CacheRepository {
             callback.failure(getException(classOfT));
         }
     }
+
     private Exception getException(Class clazz) {
         return new Exception(clazz.getSimpleName() + " cache not found!");
     }
+
     private void saveCacheToDB(Object o, String url) {
         Cache cache = new Cache(url, mGson.toJson(o), Long.valueOf(df.format(Calendar.getInstance().getTimeInMillis())));
         mCacheDao.updateCache(cache);

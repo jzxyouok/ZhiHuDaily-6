@@ -84,13 +84,35 @@ public class NetRepositoryImp implements NetRepository {
     }
 
     @Override
-    public void getThemeStories(String themeId, Callback<Theme> callback) {
+    public void getThemeStories(String themeId, final Callback<Theme> callback) {
+        ZhiHuApi.createApi().getThemeStories(themeId, new retrofit.Callback<Theme>() {
+            @Override
+            public void success(Theme theme, Response response) {
+                callback.success(theme, response.getUrl());
+                LogUtils.i(TAG, "getThemeStories net");
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                callback.failure(error, error.getUrl());
+            }
+        });
     }
 
     @Override
-    public void getBeforeThemeStories(String themeId, String storyId, Callback<Theme> callback) {
+    public void getBeforeThemeStories(String themeId, String storyId, final Callback<Theme> callback) {
+        ZhiHuApi.createApi().getBeforeThemeStories(themeId, storyId, new retrofit.Callback<Theme>() {
+            @Override
+            public void success(Theme theme, Response response) {
+                callback.success(theme, response.getUrl());
+                LogUtils.i(TAG, "getBeforeThemeStories net");
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                callback.failure(error, error.getUrl());
+            }
+        });
     }
 
 }
