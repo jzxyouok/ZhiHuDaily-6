@@ -13,6 +13,7 @@ import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.Story;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -95,13 +96,41 @@ public class DailyStoriesAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int viewType = getItemViewType(position);
+        Item item = mItems.get(position);
+        switch (viewType) {
+            case Type.TYPE_HEADER:
+                ((HeaderViewPagerHolder) holder).bindHeaderView();
+                break;
+            case Type.TYPE_DATE:
+                ((DateViewHolder) holder).bindDateView(item.getDate());
+                break;
+            case Type.TYPE_STORY:
+                ((StoryViewHolder) holder).bindStoryView(item.getStory());
+                break;
+        }
+    }
 
+    public Item getItem(int position) {
+        return mItems.get(position);
+    }
+    public String getTitleBeforePosition(int position) {
+        mTmpItem.clear();
+        mTmpItem.addAll(mItems.subList(0, position + 1));
+        Collections.reverse(mTmpItem);
+        for (Item item : mTmpItem) {
+            if (item.getType() == Type.TYPE_DATE) {
+                return item.getDate();
+            }
+        }
+        return "";
     }
 
     @Override
     public int getItemCount() {
         return mItems.size();
     }
+
     public static class Item {
         private int type;
         private String date;

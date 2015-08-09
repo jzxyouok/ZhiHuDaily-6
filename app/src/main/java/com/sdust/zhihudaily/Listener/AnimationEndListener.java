@@ -3,7 +3,7 @@
  * ʱ�䣺2015��7��19������9:35:54
  * ���ߣ�Kevin
  */
-package com.sdust.zhihudaily.view;
+package com.sdust.zhihudaily.Listener;
 
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;

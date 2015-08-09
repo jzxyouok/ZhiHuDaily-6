@@ -11,7 +11,7 @@ import android.view.animation.Animation;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.fragment.StartFragment;
 import com.sdust.zhihudaily.util.IntentUtils;
-import com.sdust.zhihudaily.view.AnimationEndListener;
+import com.sdust.zhihudaily.Listener.AnimationEndListener;
 
 /**
  * GuiderActivity

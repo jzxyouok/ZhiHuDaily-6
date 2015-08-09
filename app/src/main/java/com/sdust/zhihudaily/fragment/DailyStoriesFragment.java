@@ -3,6 +3,7 @@ package com.sdust.zhihudaily.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.adapter.DailyStoriesAdapter;
+import com.sdust.zhihudaily.adapter.holder.DateViewHolder;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
 import com.sdust.zhihudaily.widget.LoadMoreRecyclerView;
@@ -81,7 +83,6 @@ public class DailyStoriesFragment extends BaseFragment {
             @Override
             public void run() {
                 if (!isDataLoaded) {
-                    mSwipeRefreshLayout.setRefreshing(true);
                     refresh();
                 }
             }
@@ -96,19 +97,35 @@ public class DailyStoriesFragment extends BaseFragment {
     public void onPause() {
 
     }
+
+
     private String mTitle;
     private int lastTitlePos = -1;
+
+
     private void changeActionBarTitle(int dy) {
-
+        int position = mLayoutManager.findFirstVisibleItemPosition();
+        if (lastTitlePos == position) {
+            return;
+        }
+        DailyStoriesAdapter.Item item = mAdapter.getItem(position);
+        int type = item.getType();
+        if (type == DailyStoriesAdapter.Type.TYPE_HEADER) {
+            mTitle = getString(R.string.title_activity_main);
+        } else if (dy > 0 && type == DailyStoriesAdapter.Type.TYPE_DATE) {
+            mTitle = DateViewHolder.getDate(item.getDate(), getActivity());
+        } else if (dy < 0) {
+            mTitle = DateViewHolder.getDate(mAdapter.getTitleBeforePosition(position), getActivity());
+        }
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(mTitle);
+        lastTitlePos = position;
     }
 
-    private void loadMore() {
 
-    }
 
     private void refresh() {
         isDataLoaded = false;
-
+        mSwipeRefreshLayout.setRefreshing(true);
         ZhiHuApplication.getRepository().getLatestDailyStories(new Repository.Callback<DailyStories>() {
             @Override
             public void success(DailyStories dailyStories, boolean outDate) {
@@ -123,6 +140,30 @@ public class DailyStoriesFragment extends BaseFragment {
                 isDataLoaded = false;
                 mSwipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void loadMore() {
+        mRecyclerView.setLoadingMore(true);
+
+        ZhiHuApplication.getRepository().getBeforeDailyStories(mDate, new Repository.Callback<DailyStories>() {
+            @Override
+            public void success(DailyStories dailyStories, boolean outDate) {
+                /**
+                 * 注意，若果需要查询 11 月 18 日的消息，before 后的数字应为 20131119
+                 * 所以在加载前一日时，只需要mDate = dailyStories.getDate()
+                 */
+                mDate = dailyStories.getDate();
+                mRecyclerView.setLoadingMore(false);
+                mAdapter.appendList(dailyStories);
+            }
+
+            @Override
+            public void failure(Exception e) {
+                mRecyclerView.setLoadingMore(false);
+                Toast.makeText(getActivity(), "加载失败", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });
