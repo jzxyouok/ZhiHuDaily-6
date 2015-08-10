@@ -1,5 +1,6 @@
 package com.sdust.zhihudaily.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -78,6 +79,7 @@ public class StoryFragment extends Fragment {
 
     /**
      * 无法通过重载构造器传递StoryId
+     *
      * @param storyId
      * @return
      */
@@ -88,9 +90,11 @@ public class StoryFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
     public void setToolBar(Toolbar toolbar) {
         this.mActionBarToolbar = toolbar;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +135,7 @@ public class StoryFragment extends Fragment {
             llWebViewContainer.addView(refWebView.get());
         }
     }
+
     private boolean isWebViewOK() {
         return refWebView != null && refWebView.get() != null;
     }
@@ -167,6 +172,7 @@ public class StoryFragment extends Fragment {
         bindAvatarsView();
         bindWebView(hasImage);
     }
+
     private void bindHeaderView(boolean hasImage) {
         // bind header view
         if (hasImage) {
@@ -216,6 +222,7 @@ public class StoryFragment extends Fragment {
                 addSrollListener();
             }
         }
+    }
 
     private void addSrollListener() {
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -230,6 +237,51 @@ public class StoryFragment extends Fragment {
         });
     }
 
+    private void changeHeaderPosition() {
+        int scrollY = scrollView.getScrollY();
+
+        float storyHeaderViewHeight = getStoryHeaderViewHeight();
+        if (scrollY < 0) {
+            storyHeaderViewHeight += Math.abs(scrollY);
+        }
+        storyHeaderView.getLayoutParams().height = (int) storyHeaderViewHeight;
+
+        int headerScrollY = (scrollY > 0) ? (scrollY / 2) : 0;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            storyHeaderView.setScrollY(headerScrollY);
+            storyHeaderView.requestLayout();
+        }
     }
+
+    private void changeToolbarAlpha() {
+
+        int scrollY = scrollView.getScrollY();
+        int storyHeaderViewHeight = getStoryHeaderViewHeight();
+        int toolbarHeight = mActionBarToolbar.getHeight();
+        float contentHeight = storyHeaderViewHeight - toolbarHeight;
+        float ratio = Math.min(scrollY / contentHeight, 1.0f);
+        mActionBarToolbar.getBackground().setAlpha((int) (ratio * 0xFF));
+        if (scrollY <= contentHeight) {
+            mActionBarToolbar.setY(0f);
+            return;
+        }
+
+        if (scrollY + scrollView.getHeight() > llWebViewContainer.getMeasuredHeight() + storyHeaderViewHeight) {
+            return;
+        }
+
+        boolean isPullingDown = mScrollPullDownHelper.onScrollChanged(scrollY);
+        float toolBarPositionY = isPullingDown ? 0 : (contentHeight - scrollY);
+        if (scrollY < storyHeaderViewHeight + toolbarHeight) {
+            toolBarPositionY = storyHeaderViewHeight - scrollY - toolbarHeight;
+        }
+
+        mActionBarToolbar.setY(toolBarPositionY);
+    }
+
+    private int getStoryHeaderViewHeight() {
+        return getResources().getDimensionPixelSize(R.dimen.view_header_story_height);
+    }
+
 
 }
