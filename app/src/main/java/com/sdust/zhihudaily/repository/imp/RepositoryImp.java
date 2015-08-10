@@ -6,6 +6,7 @@ import android.content.Context;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.model.Theme;
 import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.CacheRepository;
@@ -179,6 +180,32 @@ public class RepositoryImp implements Repository {
                     @Override
                     public void success(Theme theme) {
                         callback.success(theme, true);
+                    }
+
+                    @Override
+                    public void failure(Exception e) {
+                        callback.failure(error);
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    public void getStoryDetail(String storyId, final Callback<Story> callback) {
+        mNetReImp.getStoryDetail(storyId, new NetRepository.Callback<Story>() {
+            @Override
+            public void success(Story story, String url) {
+                callback.success(story, false);
+                mCacheReImp.saveStoryDetail(story, url);
+            }
+
+            @Override
+            public void failure(final Exception error, String url) {
+                mCacheReImp.getStoryDetail(url, new CacheRepository.Callback<Story>() {
+                    @Override
+                    public void success(Story story) {
+                        callback.success(story, true);
                     }
 
                     @Override

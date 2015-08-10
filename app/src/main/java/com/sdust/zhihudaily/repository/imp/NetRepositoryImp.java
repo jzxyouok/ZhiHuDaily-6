@@ -3,6 +3,7 @@ package com.sdust.zhihudaily.repository.imp;
 import com.sdust.zhihudaily.api.ZhiHuApi;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.model.Theme;
 import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.NetRepository;
@@ -114,5 +115,22 @@ public class NetRepositoryImp implements NetRepository {
             }
         });
     }
+
+    @Override
+    public void getStoryDetail(String storyId, final Callback<Story> callback) {
+        ZhiHuApi.createApi().getStoryDetail(storyId, new retrofit.Callback<Story>() {
+            @Override
+            public void success(Story story, Response response) {
+                callback.success(story, response.getUrl());
+                LogUtils.i(TAG, "getStoryDetail net");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                callback.failure(error, error.getUrl());
+            }
+        });
+    }
+
 
 }

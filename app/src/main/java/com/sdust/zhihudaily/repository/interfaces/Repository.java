@@ -8,6 +8,7 @@ package com.sdust.zhihudaily.repository.interfaces;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.model.Theme;
 import com.sdust.zhihudaily.model.Themes;
 
@@ -30,5 +31,8 @@ public interface Repository {
 	void getThemeStories(String themeId, Callback<Theme> callback);
 
 	void getBeforeThemeStories(String themeId, String storyId, Callback<Theme> callback);
+
+
+	void getStoryDetail(String storyId, Callback<Story> callback);
 
 }

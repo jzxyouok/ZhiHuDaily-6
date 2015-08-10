@@ -16,6 +16,7 @@ import com.sdust.zhihudaily.db.CacheDao;
 import com.sdust.zhihudaily.model.Cache;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.model.Theme;
 import com.sdust.zhihudaily.model.Themes;
 import com.sdust.zhihudaily.repository.interfaces.CacheRepository;
@@ -138,4 +139,16 @@ public class CacheRepositoryImp implements CacheRepository {
         Cache cache = new Cache(url, mGson.toJson(o), Long.valueOf(df.format(Calendar.getInstance().getTimeInMillis())));
         mCacheDao.updateCache(cache);
     }
+
+
+
+    @Override
+    public void getStoryDetail(String url, Callback<Story> callback) {
+        getDataObject(url, Story.class, callback);
+    }
+    @Override
+    public void saveStoryDetail(Story story, String url) {
+        saveCacheToDB(story, url);
+    }
+
 }

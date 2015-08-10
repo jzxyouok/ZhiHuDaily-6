@@ -4,6 +4,7 @@ package com.sdust.zhihudaily.repository.interfaces;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.model.Theme;
 import com.sdust.zhihudaily.model.Themes;
 
@@ -28,6 +29,9 @@ public interface CacheRepository {
 
 	void getBeforeThemeStories(String url, Callback<Theme> callback);
 	void saveBeforeThemesStories(Theme theme,String url);
+
+	void getStoryDetail(String url, Callback<Story> callback);
+	void saveStoryDetail(Story story, String url);
 
 
 

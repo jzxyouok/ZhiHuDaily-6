@@ -3,6 +3,7 @@ package com.sdust.zhihudaily.api;
 
 import com.sdust.zhihudaily.model.DailyStories;
 import com.sdust.zhihudaily.model.StartImage;
+import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.model.Theme;
 import com.sdust.zhihudaily.model.Themes;
 
@@ -30,5 +31,8 @@ public interface ZhiHuApiService {
 
     @GET("/theme/{themeId}/before/{storyId}")
     void getBeforeThemeStories(@Path("themeId") String themeId, @Path("storyId") String storyId, Callback<Theme> callback);
+
+    @GET("/news/{storyId}")
+    void getStoryDetail(@Path("storyId") String storyId, Callback<Story> callback);
 
 }
