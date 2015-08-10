@@ -142,7 +142,7 @@ public class StoryFragment extends Fragment {
                 }
                 progressBar.setVisibility(View.GONE);
                 mStory = story;
-                bindData(story);
+                //bindData(story);
             }
 
             @Override
