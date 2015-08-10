@@ -51,7 +51,7 @@ public class StoryViewHolder extends RecyclerView.ViewHolder implements View.OnC
         theme = (TextView) itemView.findViewById(R.id.theme);
         line = (ImageView) itemView.findViewById(R.id.line);
         card.setOnClickListener(this);
-        theme.setOnClickListener(this);//目前版本还未有用
+        theme.setOnClickListener(this);
     }
 
     @Override
