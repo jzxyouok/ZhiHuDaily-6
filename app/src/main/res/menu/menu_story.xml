@@ -4,7 +4,7 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="200" app:showAsAction="never" />
-    <item android:id="@+id/action_collected"
+    <item android:id="@+id/action_collect"
           android:title="@string/action_collect"
           android:orderInCategory="100"
           android:icon="@drawable/collect"

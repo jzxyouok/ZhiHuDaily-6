@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.R;
@@ -193,10 +194,14 @@ public class StoryFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_share) {
-            if (mStory != null) {
-                IntentUtils.share(getActivity(), mStory);
-            }
+        switch (id){
+            case R.id.action_share:
+                if (mStory != null) {
+                    IntentUtils.share(getActivity(), mStory);
+                }
+                break;
+            case R.id.action_collect:
+                item.setIcon(R.drawable.collected);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -215,6 +220,7 @@ public class StoryFragment extends Fragment {
             @Override
             public void failure(Exception e) {
                 progressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });
