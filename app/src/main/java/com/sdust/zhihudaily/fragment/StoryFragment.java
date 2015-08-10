@@ -102,7 +102,7 @@ public class StoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true);//设置含有选项按钮
         if (getArguments() != null) {
             mStoryId = getArguments().getString(DailyStoriesFragment.EXTRA_STORY_ID);
         }

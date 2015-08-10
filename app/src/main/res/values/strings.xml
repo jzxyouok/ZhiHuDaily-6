@@ -16,6 +16,7 @@
     <string name="avatar_title_referee">推荐人</string>
     <string name="share_from">-来自知乎日报的分享</string>
     <string name="share_link">链接：</string>
+    <string name="action_collect">收藏夹</string>
 
 
 </resources>

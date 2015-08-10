@@ -85,7 +85,7 @@ public class NavigationDrawerActivity extends BaseAppCompatActivity implements N
     }
     public void setActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);//显示title,不设置默认为true
         actionBar.setTitle(mTitle);
     }
 
