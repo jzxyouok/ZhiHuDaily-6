@@ -34,7 +34,8 @@
         <activity
             android:name=".activity.NavigationDrawerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTop">
         </activity>
 
         <activity
