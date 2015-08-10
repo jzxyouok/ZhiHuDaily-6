@@ -1,8 +1,4 @@
-/**
- * �ļ���Repository.java
- * ʱ�䣺2015��7��19������9:52:08
- * ���ߣ�Kevin
- */
+
 package com.sdust.zhihudaily.repository.interfaces;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

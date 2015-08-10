@@ -1,8 +1,4 @@
-/**
- * �ļ���CacheRepositoryImp.java
- * ʱ�䣺2015��7��19������10:13:04
- * ���ߣ�Kevin
- */
+
 package com.sdust.zhihudaily.repository.imp;
 
 import android.content.Context;

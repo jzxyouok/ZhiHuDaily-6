@@ -2,10 +2,7 @@ package com.sdust.zhihudaily.model;
 
 import com.google.gson.annotations.Expose;
 
-/**
- * ����StartImage
- * ˵������ʼ�����bean��
- */
+
 public class StartImage {
 	
 	@Expose

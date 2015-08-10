@@ -1,14 +1,12 @@
-/**
- * �ļ���AnimationEndListener.java
- * ʱ�䣺2015��7��19������9:35:54
- * ���ߣ�Kevin
- */
+
 package com.sdust.zhihudaily.Listener;
 
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 
-
+/**
+ * Animation结束时的回调接口
+ */
 public class AnimationEndListener implements AnimationListener{
 
 	@Override

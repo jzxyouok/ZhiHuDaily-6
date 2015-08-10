@@ -1,8 +1,4 @@
-/**
- * �ļ���FileUtils.java
- * ʱ�䣺2015��7��19������6:18:07
- * ���ߣ�Kevin
- */
+
 package com.sdust.zhihudaily.util;
 
 import android.content.Context;

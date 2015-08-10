@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.sdust.zhihudaily.model.Cache;
 
+/**
+ * 缓存DAO
+ */
 
 public class CacheDao {
     public static final String TABLE_NAME = Cache.class.getSimpleName();
