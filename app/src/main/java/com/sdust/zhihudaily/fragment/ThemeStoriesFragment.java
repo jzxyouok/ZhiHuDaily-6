@@ -7,9 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.nostra13.universalimageloader.utils.L;
 import com.sdust.zhihudaily.R;
+import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.adapter.ThemeStoriesAdapter;
+import com.sdust.zhihudaily.model.Theme;
+import com.sdust.zhihudaily.repository.interfaces.Repository;
 import com.sdust.zhihudaily.util.LogUtils;
 import com.sdust.zhihudaily.widget.LoadMoreRecyclerView;
 
@@ -61,7 +66,7 @@ public class ThemeStoriesFragment extends BaseFragment {
         mRecyclerView.setOnLoadMoreListener(new LoadMoreRecyclerView.onLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mRecyclerView.setLoadingMore(true);
+
                 loadMore();
             }
 
@@ -80,11 +85,60 @@ public class ThemeStoriesFragment extends BaseFragment {
             @Override
             public void run() {
                 if (!isDataLoaded) {
-                    mSwipeRefreshLayout.setRefreshing(true);
+
                     refresh();
                 }
             }
         });
     }
+    private void refresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        ZhiHuApplication.getRepository().getThemeStories(mThemeId, new Repository.Callback<Theme>() {
+            @Override
+            public void success(Theme theme, boolean outDate) {
+                isDataLoaded = true;
+                mSwipeRefreshLayout.setRefreshing(false);
+                if (theme != null && mAdapter != null) {
+                    if (theme.getStories().size() > 0) {
+                        mLastStoryId = theme.getStories().get(theme.getStories().size() - 1).getId();
+                    }
+                    LogUtils.i(TAG, "last story id: " + mLastStoryId);
+                    mAdapter.setTheme(theme);
+                }
+            }
 
+            @Override
+            public void failure(Exception e) {
+                isDataLoaded = false;
+                mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getActivity(), "刷新错误", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        });
+    }
+
+
+    private void loadMore() {
+        isDataLoaded = false;
+        mRecyclerView.setLoadingMore(true);
+        ZhiHuApplication.getRepository().getBeforeThemeStories(mThemeId, mLastStoryId, new Repository.Callback<Theme>() {
+            @Override
+            public void success(Theme theme, boolean outDate) {
+                mRecyclerView.setLoadingMore(false);
+                if (theme != null && mAdapter != null) {
+                    if (theme.getStories().size() > 0) {
+                        mLastStoryId = theme.getStories().get(theme.getStories().size() - 1).getId();
+                        mAdapter.appendStories(theme.getStories());
+                    }
+                }
+            }
+
+            @Override
+            public void failure(Exception e) {
+                mRecyclerView.setLoadingMore(false);
+                Toast.makeText(getActivity(), "load more error", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        });
+    }
 }
