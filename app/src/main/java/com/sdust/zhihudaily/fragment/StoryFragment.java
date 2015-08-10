@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -16,13 +20,17 @@ import android.widget.ScrollView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.ZhiHuApplication;
+import com.sdust.zhihudaily.model.Editor;
 import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
+import com.sdust.zhihudaily.util.WebUtils;
 import com.sdust.zhihudaily.widget.AvatarsView;
 import com.sdust.zhihudaily.widget.ScrollPullDownHelper;
 import com.sdust.zhihudaily.widget.StoryHeaderView;
 
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -151,6 +159,77 @@ public class StoryFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void bindData(Story story) {
+        boolean hasImage = !TextUtils.isEmpty(story.getImage());
+        bindHeaderView(hasImage);
+        bindAvatarsView();
+        bindWebView(hasImage);
+    }
+    private void bindHeaderView(boolean hasImage) {
+        // bind header view
+        if (hasImage) {
+            if (mActionBarToolbar != null) {
+                mActionBarToolbar.getBackground().setAlpha(0);
+            }
+            spaceView.setVisibility(View.VISIBLE);
+            rlStoryHeader.addView(storyHeaderView);
+            storyHeaderView.bindData(mStory.getTitle(), mStory.getImageSource(), mStory.getImage(), mOptions);
+        } else {
+            spaceView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mActionBarToolbar.getHeight()));
+        }
+    }
+
+    private void bindAvatarsView() {
+        List<Editor> recommenders = mStory.getRecommenders();
+        if (recommenders != null && recommenders.size() > 0) {
+            avatarsView.setVisibility(View.VISIBLE);
+            List<String> avatars = new ArrayList<>(recommenders.size());
+            for (Editor editor : recommenders) {
+                avatars.add(editor.getAvatar());
+            }
+            avatarsView.bindData(getString(R.string.avatar_title_referee), avatars);
+        } else {
+            avatarsView.setVisibility(View.GONE);
+        }
+    }
+
+    private void bindWebView(boolean hasImage) {
+        if (TextUtils.isEmpty(mStory.getBody())) {
+            WebSettings settings = refWebView.get().getSettings();
+            settings.setJavaScriptEnabled(true);
+            settings.setDomStorageEnabled(true);
+            settings.setAppCacheEnabled(true);
+            refWebView.get().setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    view.loadUrl(url);
+                    return true;
+                }
+            });
+            refWebView.get().loadUrl(mStory.getShareUrl());
+        } else {
+            String data = WebUtils.BuildHtmlWithCss(mStory.getBody(), mStory.getCssList(), false);
+            refWebView.get().loadDataWithBaseURL(WebUtils.BASE_URL, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, WebUtils.FAIL_URL);
+            if (hasImage) {
+                addSrollListener();
+            }
+        }
+
+    private void addSrollListener() {
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (!isAdded()) {
+                    return;
+                }
+                changeHeaderPosition();
+                changeToolbarAlpha();
+            }
+        });
+    }
+
     }
 
 }

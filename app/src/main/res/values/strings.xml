@@ -13,5 +13,7 @@
     <string name="recycler_item_main_today_hottest">今日热文</string>
     <string name="avatar_title_editor">主编</string>
     <string name="recycler_item_main_select_from">选自</string>
+    <string name="avatar_title_referee">推荐人</string>
+
 
 </resources>
