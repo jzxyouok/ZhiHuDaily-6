@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -24,6 +27,7 @@ import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.model.Editor;
 import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
+import com.sdust.zhihudaily.util.IntentUtils;
 import com.sdust.zhihudaily.util.WebUtils;
 import com.sdust.zhihudaily.widget.AvatarsView;
 import com.sdust.zhihudaily.widget.ScrollPullDownHelper;
@@ -145,7 +149,57 @@ public class StoryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         refresh();
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isWebViewOK()) {
+            refWebView.get().onResume();
+        }
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (isWebViewOK()) {
+            refWebView.get().onPause();
+        }
+    }
+
+    /**
+     * 释放掉
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (isWebViewOK()) {
+            refWebView.get().removeAllViews();
+            refWebView.get().destroy();
+            llWebViewContainer.removeView(refWebView.get());
+            refWebView = null;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_story, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_share) {
+            if (mStory != null) {
+                IntentUtils.share(getActivity(), mStory);
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void refresh() {
         ZhiHuApplication.getRepository().getStoryDetail(mStoryId, new Repository.Callback<Story>() {
             @Override

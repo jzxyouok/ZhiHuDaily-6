@@ -14,6 +14,8 @@
     <string name="avatar_title_editor">主编</string>
     <string name="recycler_item_main_select_from">选自</string>
     <string name="avatar_title_referee">推荐人</string>
+    <string name="share_from">-来自知乎日报的分享</string>
+    <string name="share_link">链接：</string>
 
 
 </resources>
