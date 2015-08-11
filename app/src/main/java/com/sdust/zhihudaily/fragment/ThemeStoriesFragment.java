@@ -17,14 +17,18 @@ import com.sdust.zhihudaily.repository.interfaces.Repository;
 import com.sdust.zhihudaily.util.LogUtils;
 import com.sdust.zhihudaily.widget.LoadMoreRecyclerView;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created by Kevin on 2015/8/7.
  */
 public class ThemeStoriesFragment extends BaseFragment {
     public static final  String TAG = ThemeStoriesFragment.class.getSimpleName();
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-
-    private LoadMoreRecyclerView mRecyclerView;
+    @InjectView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @InjectView(R.id.recyclerView)
+    LoadMoreRecyclerView mRecyclerView;
 
     private ThemeStoriesAdapter mAdapter;
 
@@ -50,8 +54,7 @@ public class ThemeStoriesFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        mRecyclerView = (LoadMoreRecyclerView) view.findViewById(R.id.recyclerView);
+        ButterKnife.inject(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);

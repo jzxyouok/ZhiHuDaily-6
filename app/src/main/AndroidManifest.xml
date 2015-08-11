@@ -47,6 +47,10 @@
             android:name=".activity.StoryActivity"
             android:label="@string/title_activity_story">
         </activity>
+        <activity
+            android:name=".activity.CollectedActivity"
+            android:label="@string/title_activity_collected">
+        </activity>
 
     </application>
 

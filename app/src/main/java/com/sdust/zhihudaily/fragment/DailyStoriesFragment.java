@@ -22,11 +22,19 @@ import com.sdust.zhihudaily.util.LogUtils;
 import com.sdust.zhihudaily.widget.LoadMoreRecyclerView;
 import com.sdust.zhihudaily.widget.MyViewPager;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class DailyStoriesFragment extends BaseFragment {
     public static final String TAG = DailyStoriesFragment.class.getSimpleName();
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @InjectView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @InjectView(R.id.recyclerView)
+    LoadMoreRecyclerView mRecyclerView;
+
     private DailyStoriesAdapter mAdapter;
-    private LoadMoreRecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private String mDate;
 
@@ -46,8 +54,8 @@ public class DailyStoriesFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.inject(this,view);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView = (LoadMoreRecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(mLayoutManager);
         /**
          * 上拉加载更多，加载beforeDailyStories
@@ -63,7 +71,6 @@ public class DailyStoriesFragment extends BaseFragment {
                 changeActionBarTitle(dy);
             }
         });
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         /**
          * 下拉刷新，加载latestDailyStories

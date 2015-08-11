@@ -20,13 +20,19 @@ import com.sdust.zhihudaily.repository.interfaces.Repository;
 import com.sdust.zhihudaily.util.LogUtils;
 import com.sdust.zhihudaily.util.SystemUtils;
 
-/**
- * ����StartFragment ˵������ʼ����
- */
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class StartFragment extends Fragment {
-    private TextView mAuthorView;
-    private ImageView mLogoImg;
-    private ImageView mStartImg;
+    @InjectView(R.id.tv_author)
+    TextView mAuthorView;
+
+    @InjectView(R.id.img_logo)
+    ImageView mLogoImg;
+
+    @InjectView(R.id.img_start)
+    ImageView mStartImg;
+
     private int mHeight;
     private int mWidth;
     private Animation mStartAnim;
@@ -60,9 +66,7 @@ public class StartFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mStartImg = (ImageView) view.findViewById(R.id.img_start);
-        mAuthorView = (TextView) view.findViewById(R.id.tv_author);
-        mLogoImg = (ImageView) view.findViewById(R.id.img_logo);
+        ButterKnife.inject(this,view);
         mStartImg.startAnimation(mStartAnim);
     }
 

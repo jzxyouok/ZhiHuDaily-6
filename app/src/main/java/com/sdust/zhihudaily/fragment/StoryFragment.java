@@ -220,23 +220,29 @@ public class StoryFragment extends Fragment {
                 break;
             case R.id.action_collect:
                 if (!isCollected) {
-                    Story collected = new Story();
-                    collected.setId(mStoryId);
-                    collected.setTitle(getArguments().getString(IntentUtils.EXTRA_STORY_TITLE));
-                    List<String> imageUrlList = new ArrayList<String>();
-                    imageUrlList.add(getArguments().getString(IntentUtils.EXTRA_STORY_IMAGES));
-                    collected.setImages(imageUrlList);
-                    collected.setMultiPic(getArguments().getString(IntentUtils.EXTRA_STORY_MULTIPIC));
-                    mCollectedDao.insertCollected(collected);
+                    insertCollectedDao();
                     item.setIcon(R.drawable.collected);
                     Toast.makeText(getActivity(),"收藏成功",Toast.LENGTH_SHORT).show();
+                    isCollected = true;
                 } else {
                     mCollectedDao.deleteCollected(mStoryId);
                     item.setIcon(R.drawable.collect);
                     Toast.makeText(getActivity(),"取消收藏",Toast.LENGTH_SHORT).show();
+                    isCollected = false;
                 }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void insertCollectedDao() {
+        Story collected = new Story();
+        collected.setId(mStoryId);
+        collected.setTitle(getArguments().getString(IntentUtils.EXTRA_STORY_TITLE));
+        List<String> imageUrlList = new ArrayList<String>();
+        imageUrlList.add(getArguments().getString(IntentUtils.EXTRA_STORY_IMAGES));
+        collected.setImages(imageUrlList);
+        collected.setMultiPic(getArguments().getString(IntentUtils.EXTRA_STORY_MULTIPIC));
+        mCollectedDao.insertCollected(collected);
     }
 
     private void refresh() {
@@ -376,6 +382,5 @@ public class StoryFragment extends Fragment {
     private int getStoryHeaderViewHeight() {
         return getResources().getDimensionPixelSize(R.dimen.view_header_story_height);
     }
-
 
 }
