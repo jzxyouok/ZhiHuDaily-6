@@ -12,8 +12,6 @@ public class BaseFragment extends Fragment {
     public static final int THEME_NUMBER_MAIN = 0;
     public static final String THEME_ID_MAIN = "section_id_main";
 
-    public static final String EXTRA_STORY_ID = "extra_story_id";
-
     private int mArgThemeNumber;
 
     private String mArgThemeId;

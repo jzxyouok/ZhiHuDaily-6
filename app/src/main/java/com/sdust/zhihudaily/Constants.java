@@ -10,7 +10,7 @@ public class Constants {
 	 * Datebases Constants
 	 */
 	public static final String DATABASE_NAME = "DailyDB";
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 
 	/**
 	 * HTTP Constants

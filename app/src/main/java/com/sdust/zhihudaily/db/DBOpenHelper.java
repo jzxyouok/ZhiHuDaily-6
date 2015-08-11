@@ -19,6 +19,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     private void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
         CacheDao.createTable(db, ifNotExists);
+        CollectedDao.createTable(db,ifNotExists);
     }
 
     /**
@@ -26,6 +27,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     private void dropAllTables(SQLiteDatabase db, boolean ifExists) {
         CacheDao.dropTable(db, ifExists);
+        CollectedDao.dropTable(db,ifExists);
     }
 
     public static DBOpenHelper getInstance(Context context) {

@@ -31,9 +31,7 @@ public class CollectedDao {
                 "story_multipic TEXT);"); // 3: 文章是否包含多张图片
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+
     public static void dropTable(SQLiteDatabase db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + TABLE_NAME;
         db.execSQL(sql);
@@ -41,14 +39,15 @@ public class CollectedDao {
 
     public void insertCollected(Story story) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
+        String imagesUrl = story.getImages().get(0);
         db.execSQL("insert into "
                         + TABLE_NAME
                         + " (story_id, story_title, story_image,story_multipic) values(?,?,?,?)",
-                new Object[]{story.getId(), story.getTitle(), story.getImages(), story.getMultiPic()});
+                new Object[]{story.getId(), story.getTitle(), imagesUrl, story.getMultiPic()});
         db.close();
     }
 
-    public void deleteCache(String id) {
+    public void deleteCollected(String id) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         db.execSQL("delete from "
                         + TABLE_NAME
@@ -58,7 +57,7 @@ public class CollectedDao {
     }
 
 
-    public List<Story> getAllStory() {
+    public List<Story> getAllCollected() {
         SQLiteDatabase db = mHelper.getReadableDatabase();
         List<Story> stories = new ArrayList<Story>();
         Cursor cursor = db.rawQuery("select * from "

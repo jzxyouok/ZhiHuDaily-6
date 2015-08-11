@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.ZhiHuApplication;
+import com.sdust.zhihudaily.db.CollectedDao;
 import com.sdust.zhihudaily.model.Editor;
 import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
@@ -76,7 +77,12 @@ public class StoryFragment extends Fragment {
     private String mStoryId;
 
     private Story mStory;
+
+    private CollectedDao mCollectedDao;
+
     private Toolbar mActionBarToolbar;
+
+    private boolean isCollected;
 
     public StoryFragment() {
 
@@ -88,7 +94,7 @@ public class StoryFragment extends Fragment {
      * @param storyId
      * @return
      */
-    public static StoryFragment newInstance(String storyId,String storyTitle,String storyImages,String storyMultipic) {
+    public static StoryFragment newInstance(String storyId, String storyTitle, String storyImages, String storyMultipic) {
         StoryFragment fragment = new StoryFragment();
         Bundle bundle = new Bundle();
         bundle.putString(IntentUtils.EXTRA_STORY_ID, storyId);
@@ -109,7 +115,8 @@ public class StoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);//设置含有选项按钮
         if (getArguments() != null) {
-            mStoryId = getArguments().getString(DailyStoriesFragment.EXTRA_STORY_ID);
+            mStoryId = getArguments().getString(IntentUtils.EXTRA_STORY_ID);
+
         }
 
         mScrollPullDownHelper = new ScrollPullDownHelper();
@@ -150,10 +157,11 @@ public class StoryFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated( Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         refresh();
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -193,24 +201,44 @@ public class StoryFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_story, menu);
+        MenuItem collectedMenu = menu.findItem(R.id.action_collect);
+        mCollectedDao = new CollectedDao(getActivity());
+        isCollected = mCollectedDao.exists(mStoryId);
+        if (isCollected) {
+            collectedMenu.setIcon(R.drawable.collected);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.action_share:
                 if (mStory != null) {
                     IntentUtils.share(getActivity(), mStory);
                 }
                 break;
             case R.id.action_collect:
-                Story collected = new Story();
-
-                item.setIcon(R.drawable.collected);
+                if (!isCollected) {
+                    Story collected = new Story();
+                    collected.setId(mStoryId);
+                    collected.setTitle(getArguments().getString(IntentUtils.EXTRA_STORY_TITLE));
+                    List<String> imageUrlList = new ArrayList<String>();
+                    imageUrlList.add(getArguments().getString(IntentUtils.EXTRA_STORY_IMAGES));
+                    collected.setImages(imageUrlList);
+                    collected.setMultiPic(getArguments().getString(IntentUtils.EXTRA_STORY_MULTIPIC));
+                    mCollectedDao.insertCollected(collected);
+                    item.setIcon(R.drawable.collected);
+                    Toast.makeText(getActivity(),"收藏成功",Toast.LENGTH_SHORT).show();
+                } else {
+                    mCollectedDao.deleteCollected(mStoryId);
+                    item.setIcon(R.drawable.collect);
+                    Toast.makeText(getActivity(),"取消收藏",Toast.LENGTH_SHORT).show();
+                }
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void refresh() {
         ZhiHuApplication.getRepository().getStoryDetail(mStoryId, new Repository.Callback<Story>() {
             @Override
@@ -226,7 +254,7 @@ public class StoryFragment extends Fragment {
             @Override
             public void failure(Exception e) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });
