@@ -19,9 +19,9 @@ public class CollectedActivity extends BaseAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new CollectedFragment())
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new CollectedFragment(), TAG)
                     .commit();
         }
     }
