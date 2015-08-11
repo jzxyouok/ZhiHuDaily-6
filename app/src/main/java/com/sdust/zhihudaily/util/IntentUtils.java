@@ -12,6 +12,10 @@ import com.sdust.zhihudaily.model.Story;
 
 public class IntentUtils {
 	public static final String EXTRA_STORY_ID = "extra_story_id";
+	public static final String EXTRA_STORY_TITLE = "extra_story_title";
+	public static final String EXTRA_STORY_IMAGES = "extra_story_images";
+	public static final String EXTRA_STORY_MULTIPIC = "extra_story_multipic";//是否含多张图片
+
 
 	public static void intentToMainActivity(Activity activity) {
 		Intent intent = new Intent(activity,NavigationDrawerActivity.class);
@@ -23,7 +27,11 @@ public class IntentUtils {
 
 	public static final void intentToStoryActivity(Activity activity, Story story) {
 		Intent intent = new Intent(activity, StoryActivity.class);
-		intent.putExtra(EXTRA_STORY_ID, String.valueOf(story.getId()));
+		intent.putExtra(EXTRA_STORY_ID, story.getId());
+		intent.putExtra(EXTRA_STORY_TITLE, story.getTitle());
+		intent.putExtra(EXTRA_STORY_IMAGES, story.getImages() == null ? "" : story.getImages().get(0));
+		intent.putExtra(EXTRA_STORY_MULTIPIC, story.getMultiPic());
+
 		activity.startActivity(intent);
 	}
 	public static final void share(Activity activity, Story story) {

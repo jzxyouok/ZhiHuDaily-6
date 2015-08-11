@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sdust.zhihudaily.R;
-import com.sdust.zhihudaily.util.DensityUtil;
+import com.sdust.zhihudaily.util.DensityUtils;
 
 import java.util.List;
 
@@ -57,8 +57,8 @@ public class AvatarsView extends HorizontalScrollView {
 
     public void bindData(String name, List<String> images) {
         title.setText(name);
-        int hw = DensityUtil.dipToPx(getContext(), 36);
-        int margin = DensityUtil.dipToPx(getContext(), 8);
+        int hw = DensityUtils.dipToPx(getContext(), 36);
+        int margin = DensityUtils.dipToPx(getContext(), 8);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(hw, hw);
         lp.setMargins(margin, margin, margin, margin);
         llAvatarContainer.removeAllViews();

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.utils.L;
 import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.ZhiHuApplication;
 import com.sdust.zhihudaily.adapter.ThemeStoriesAdapter;
@@ -136,7 +135,7 @@ public class ThemeStoriesFragment extends BaseFragment {
             @Override
             public void failure(Exception e) {
                 mRecyclerView.setLoadingMore(false);
-                Toast.makeText(getActivity(), "load more error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "加载错误", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });

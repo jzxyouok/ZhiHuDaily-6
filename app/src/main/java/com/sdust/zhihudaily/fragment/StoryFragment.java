@@ -2,6 +2,7 @@ package com.sdust.zhihudaily.fragment;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -87,10 +88,14 @@ public class StoryFragment extends Fragment {
      * @param storyId
      * @return
      */
-    public static StoryFragment newInstance(String storyId) {
+    public static StoryFragment newInstance(String storyId,String storyTitle,String storyImages,String storyMultipic) {
         StoryFragment fragment = new StoryFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(DailyStoriesFragment.EXTRA_STORY_ID, storyId);
+        bundle.putString(IntentUtils.EXTRA_STORY_ID, storyId);
+        bundle.putString(IntentUtils.EXTRA_STORY_TITLE, storyTitle);
+        bundle.putString(IntentUtils.EXTRA_STORY_IMAGES, storyImages);
+        bundle.putString(IntentUtils.EXTRA_STORY_MULTIPIC, storyMultipic);
+
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -145,7 +150,7 @@ public class StoryFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated( Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         refresh();
     }
@@ -200,6 +205,8 @@ public class StoryFragment extends Fragment {
                 }
                 break;
             case R.id.action_collect:
+                Story collected = new Story();
+
                 item.setIcon(R.drawable.collected);
         }
         return super.onOptionsItemSelected(item);

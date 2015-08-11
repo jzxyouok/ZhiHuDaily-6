@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.sdust.zhihudaily.R;
-import com.sdust.zhihudaily.fragment.DailyStoriesFragment;
 import com.sdust.zhihudaily.fragment.StoryFragment;
+import com.sdust.zhihudaily.util.IntentUtils;
 import com.sdust.zhihudaily.util.LogUtils;
 
 /**
@@ -23,8 +23,12 @@ public class StoryActivity extends  BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(null);
         if (savedInstanceState == null) {
-            String storyId = getIntent().getStringExtra(DailyStoriesFragment.EXTRA_STORY_ID);
-            StoryFragment storyFragment = StoryFragment.newInstance(storyId);
+            String storyId = getIntent().getStringExtra(IntentUtils.EXTRA_STORY_ID);
+            String storyTitle = getIntent().getStringExtra(IntentUtils.EXTRA_STORY_TITLE);
+            String storyImages = getIntent().getStringExtra(IntentUtils.EXTRA_STORY_IMAGES);
+            String storyMultipic = getIntent().getStringExtra(IntentUtils.EXTRA_STORY_MULTIPIC);
+
+            StoryFragment storyFragment = StoryFragment.newInstance(storyId,storyTitle,storyImages,storyMultipic);
             storyFragment.setToolBar(mActionBarToolbar);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, storyFragment, StoryFragment.TAG)

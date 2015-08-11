@@ -11,7 +11,7 @@ import com.sdust.zhihudaily.adapter.holder.StoryViewHolder;
 import com.sdust.zhihudaily.model.Editor;
 import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.model.Theme;
-import com.sdust.zhihudaily.util.DensityUtil;
+import com.sdust.zhihudaily.util.DensityUtils;
 import com.sdust.zhihudaily.widget.AvatarsView;
 import com.sdust.zhihudaily.widget.StoryHeaderView;
 
@@ -68,7 +68,7 @@ public class ThemeStoriesAdapter extends RecyclerView.Adapter {
             case Type.TYPE_AVATARS:
                 AvatarsView avatarsView = new AvatarsView(parent.getContext());
                 RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                lp.setMargins(0, DensityUtil.dipToPx(parent.getContext(), 8), 0, 0);
+                lp.setMargins(0, DensityUtils.dipToPx(parent.getContext(), 8), 0, 0);
                 avatarsView.setLayoutParams(lp);
                 viewHolder = new AvatarViewHolder(avatarsView);
                 break;

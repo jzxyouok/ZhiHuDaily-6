@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 public class SharedPrefUtils {
 	
 	private static final String SHARED_PREF_START_JSON = "shared_pref-start_json";
-	
+
 	public static SharedPreferences getDefaultSharedPreferences(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context);
 	}
@@ -18,7 +18,7 @@ public class SharedPrefUtils {
 	 public static String getStartJson(Context context){
 	        SharedPreferences sp = getDefaultSharedPreferences(context);
 	        return sp.getString(SHARED_PREF_START_JSON, null);
-	    }
+	 }
 	 
 	 
 	 public static void setStartJson(Context context,String value) {
@@ -26,5 +26,6 @@ public class SharedPrefUtils {
 		 sp.edit().putString(SHARED_PREF_START_JSON, value).commit();
 	 }
 
-	
+
+
 }
