@@ -8,6 +8,7 @@ import com.sdust.zhihudaily.R;
 import com.sdust.zhihudaily.adapter.holder.StoryViewHolder;
 import com.sdust.zhihudaily.model.Story;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class CollectedAdapter extends RecyclerView.Adapter {
 
-    private List<Story> mStories;
+    private List<Story> mStories  = new ArrayList<Story>();
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,6 +44,8 @@ public class CollectedAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mStories.size();
+        if(mStories != null)
+            return mStories.size();
+        return 0;
     }
 }
