@@ -35,7 +35,6 @@ import com.sdust.zhihudaily.widget.AvatarsView;
 import com.sdust.zhihudaily.widget.ScrollPullDownHelper;
 import com.sdust.zhihudaily.widget.StoryHeaderView;
 
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +65,7 @@ public class StoryFragment extends Fragment {
     @InjectView(R.id.spaceView)
     View spaceView;
 
-    private SoftReference<WebView> refWebView;//加载webview可能会造成OOM，所以将其设置为软引用，防止OOM
+    private WebView refWebView;//加载webview可能会造成OOM，所以将其设置为软引用，防止OOM
 
     private StoryHeaderView storyHeaderView;
 
@@ -132,10 +131,10 @@ public class StoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         storyHeaderView = StoryHeaderView.newInstance(container);
         avatarsView = (AvatarsView) inflater.inflate(R.layout.layout_avatars, container, false);
-        refWebView = new SoftReference<WebView>(new WebView(getActivity()));
+        refWebView = new WebView(getActivity());
         if (isWebViewOK()) {
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            refWebView.get().setLayoutParams(lp);
+            refWebView.setLayoutParams(lp);
         }
         return inflater.inflate(R.layout.fragment_story, container, false);
     }
@@ -148,12 +147,12 @@ public class StoryFragment extends Fragment {
         scrollView.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
 
         if (isWebViewOK()) {
-            llWebViewContainer.addView(refWebView.get());
+            llWebViewContainer.addView(refWebView);
         }
     }
 
     private boolean isWebViewOK() {
-        return refWebView != null && refWebView.get() != null;
+        return refWebView != null && refWebView != null;
     }
 
     @Override
@@ -166,7 +165,7 @@ public class StoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (isWebViewOK()) {
-            refWebView.get().onResume();
+            refWebView.onResume();
         }
     }
 
@@ -174,7 +173,7 @@ public class StoryFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if (isWebViewOK()) {
-            refWebView.get().onPause();
+            refWebView.onPause();
         }
     }
 
@@ -185,9 +184,9 @@ public class StoryFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         if (isWebViewOK()) {
-            refWebView.get().removeAllViews();
-            refWebView.get().destroy();
-            llWebViewContainer.removeView(refWebView.get());
+            refWebView.removeAllViews();
+            refWebView.destroy();
+            llWebViewContainer.removeView(refWebView);
             refWebView = null;
         }
     }
@@ -260,7 +259,7 @@ public class StoryFragment extends Fragment {
             @Override
             public void failure(Exception e) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ZhiHuApplication.getContext(), "网络异常", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });
@@ -303,21 +302,21 @@ public class StoryFragment extends Fragment {
 
     private void bindWebView(boolean hasImage) {
         if (TextUtils.isEmpty(mStory.getBody())) {
-            WebSettings settings = refWebView.get().getSettings();
+            WebSettings settings = refWebView.getSettings();
             settings.setJavaScriptEnabled(true);
             settings.setDomStorageEnabled(true);
             settings.setAppCacheEnabled(true);
-            refWebView.get().setWebViewClient(new WebViewClient() {
+            refWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);
                     return true;
                 }
             });
-            refWebView.get().loadUrl(mStory.getShareUrl());
+            refWebView.loadUrl(mStory.getShareUrl());
         } else {
             String data = WebUtils.BuildHtmlWithCss(mStory.getBody(), mStory.getCssList(), false);
-            refWebView.get().loadDataWithBaseURL(WebUtils.BASE_URL, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, WebUtils.FAIL_URL);
+            refWebView.loadDataWithBaseURL(WebUtils.BASE_URL, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, WebUtils.FAIL_URL);
             if (hasImage) {
                 addSrollListener();
             }

@@ -73,7 +73,6 @@ public class AvatarsView extends HorizontalScrollView {
         }
     }
 
-
     private float mDownX;
     private float mDownY;
     @Override

@@ -11,7 +11,7 @@ import com.sdust.zhihudaily.util.LogUtils;
 public class LoadMoreRecyclerView extends RecyclerView {
     private static final String TAG = LoadMoreRecyclerView.class.getSimpleName();
     private boolean mIsLoadingMore = false;
-    private onLoadMoreListener mListener;
+    private OnLoadMoreListener mListener;
 
     public LoadMoreRecyclerView(Context context) {
         this(context, null);
@@ -35,7 +35,7 @@ public class LoadMoreRecyclerView extends RecyclerView {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             LoadMoreRecyclerView view = (LoadMoreRecyclerView) recyclerView;
-            onLoadMoreListener onLoadMoreListener = view.getOnLoadMoreListener();
+            OnLoadMoreListener onLoadMoreListener = view.getOnLoadMoreListener();
 
             onLoadMoreListener.onScrolled(recyclerView, dx, dy);
 
@@ -52,12 +52,12 @@ public class LoadMoreRecyclerView extends RecyclerView {
     }
 
 
-    public void setOnLoadMoreListener(onLoadMoreListener listener) {
+    public void setOnLoadMoreListener(OnLoadMoreListener listener) {
         this.mListener = listener;
         init();
     }
 
-    public onLoadMoreListener getOnLoadMoreListener() {
+    public OnLoadMoreListener getOnLoadMoreListener() {
         return this.mListener;
     }
 
@@ -69,7 +69,7 @@ public class LoadMoreRecyclerView extends RecyclerView {
         return mIsLoadingMore;
     }
 
-    public interface onLoadMoreListener {
+    public interface OnLoadMoreListener {
         public void onLoadMore();
 
         public void onScrolled(RecyclerView recyclerView, int dx, int dy);

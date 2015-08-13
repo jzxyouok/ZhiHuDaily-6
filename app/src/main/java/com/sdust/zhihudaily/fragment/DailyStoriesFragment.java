@@ -60,7 +60,7 @@ public class DailyStoriesFragment extends BaseFragment {
         /**
          * 上拉加载更多，加载beforeDailyStories
          */
-        mRecyclerView.setOnLoadMoreListener(new LoadMoreRecyclerView.onLoadMoreListener() {
+        mRecyclerView.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 loadMore();

@@ -65,7 +65,7 @@ public class ThemeStoriesFragment extends BaseFragment {
             }
         });
 
-        mRecyclerView.setOnLoadMoreListener(new LoadMoreRecyclerView.onLoadMoreListener() {
+        mRecyclerView.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
 
