@@ -22,6 +22,7 @@ public class ZhiHuApplication extends Application{
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
 		applicationContext = getApplicationContext();
 		initImageLoader(getApplicationContext());
 		

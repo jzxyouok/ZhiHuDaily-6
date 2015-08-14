@@ -107,4 +107,22 @@ public class HeaderViewPagerHolder extends RecyclerView.ViewHolder {
             return super.getItemPosition(object);
         }
     }
+    public boolean isAutoScrolling() {
+        if (viewPager != null) {
+            return viewPager.isAutoScrolling();
+        }
+        return false;
+    }
+
+    public void stopAutoScroll() {
+        if (viewPager != null) {
+            viewPager.stopAutoScroll();
+        }
+    }
+
+    public void startAutoScroll() {
+        if (viewPager != null) {
+            viewPager.startAutoScroll();
+        }
+    }
 }

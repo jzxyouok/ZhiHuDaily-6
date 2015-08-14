@@ -67,7 +67,25 @@ public class DailyStoriesAdapter extends RecyclerView.Adapter {
         }
     }
 
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        if (holder instanceof HeaderViewPagerHolder) {
+            HeaderViewPagerHolder headerHolder = (HeaderViewPagerHolder) holder;
+            if (headerHolder.isAutoScrolling()) {
+                headerHolder.stopAutoScroll();
+            }
+        }
+    }
 
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        if (holder instanceof HeaderViewPagerHolder) {
+            HeaderViewPagerHolder headerHolder = (HeaderViewPagerHolder) holder;
+            if (!headerHolder.isAutoScrolling()) {
+                headerHolder.startAutoScroll();
+            }
+        }
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = null;

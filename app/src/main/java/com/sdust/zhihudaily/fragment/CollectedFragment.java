@@ -39,6 +39,7 @@ public class CollectedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (savedInstanceState == null) {
             mAdapter = new CollectedAdapter();
         }
@@ -117,7 +118,7 @@ public class CollectedFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_story, menu);
+        inflater.inflate(R.menu.menu_collected, menu);
     }
 
 }
