@@ -70,9 +70,10 @@ public class CollectedFragment extends Fragment {
         });
     }
 
+
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
@@ -84,8 +85,6 @@ public class CollectedFragment extends Fragment {
 
     }
 
-
-
     private void loadFirst() {
         if (mCollectedStories.size() <= 20) {
             mAdapter.setStories(mCollectedStories);
@@ -95,9 +94,9 @@ public class CollectedFragment extends Fragment {
                 stories.add(mCollectedStories.get(i));
             }
             mAdapter.setStories(stories);
-            mAdapter.notifyDataSetChanged();
             mItemCount = 20;
         }
+        mAdapter.notifyDataSetChanged();
     }
 
     private void loadMore() {

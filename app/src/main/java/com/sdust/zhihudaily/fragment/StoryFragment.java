@@ -85,6 +85,12 @@ public class StoryFragment extends Fragment {
 
     private boolean isCollected;
 
+    private boolean mHasImage;
+
+    boolean isNight;
+
+    boolean mBackFromSetting;
+
     public StoryFragment() {
 
     }
@@ -118,9 +124,9 @@ public class StoryFragment extends Fragment {
         if (getArguments() != null) {
             mStoryId = getArguments().getString(IntentUtils.EXTRA_STORY_ID);
         }
-
+        isNight = SharedPrefUtils.getIsNiaghtMode(getActivity());
+        mBackFromSetting = false;
         mScrollPullDownHelper = new ScrollPullDownHelper();
-
         this.mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(false)
                 .cacheOnDisk(true)
@@ -139,8 +145,8 @@ public class StoryFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
-
         scrollView.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
+
         refresh();
     }
 
@@ -157,14 +163,21 @@ public class StoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         if (isWebViewOK()) {
             refWebView.onResume();
+        }
+
+        if(mBackFromSetting && isNight != SharedPrefUtils.getIsNiaghtMode(getActivity())) {
+            isNight = !isNight;
+            bindWebView(mHasImage);
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
+
         if (isWebViewOK()) {
             refWebView.onPause();
         }
@@ -187,6 +200,13 @@ public class StoryFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBackFromSetting = true;
     }
 
     @Override
@@ -259,13 +279,13 @@ public class StoryFragment extends Fragment {
     }
 
     private void bindData(Story story) {
-        final boolean hasImage = !TextUtils.isEmpty(story.getImage());
-        bindHeaderView(hasImage);
+        mHasImage = !TextUtils.isEmpty(story.getImage());
+        bindHeaderView(mHasImage);
         bindAvatarsView();
         llWebViewContainer.post(new Runnable() {
             @Override
             public void run() {
-                bindWebView(hasImage);
+                bindWebView(mHasImage);
             }
         });
     }
@@ -314,7 +334,7 @@ public class StoryFragment extends Fragment {
             });
             refWebView.loadUrl(mStory.getShareUrl());
         } else {
-            boolean isNight = SharedPrefUtils.getIsNiaghtMode(getActivity());
+
             String data = WebUtils.BuildHtmlWithCss(mStory.getBody(), mStory.getCssList(), isNight);
             refWebView.loadDataWithBaseURL(null, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, null);
 
@@ -337,15 +357,14 @@ public class StoryFragment extends Fragment {
     }
 
 
-
     private void changeToolbarAlpha() {
 
         int scrollY = scrollView.getScrollY();
-        LogUtils.i(TAG,"scrolly "+scrollY+"");
+        LogUtils.i(TAG, "scrolly " + scrollY + "");
         int storyHeaderViewHeight = getStoryHeaderViewHeight();
-        LogUtils.i(TAG,"storyHeaderHeight"+storyHeaderViewHeight);
+        LogUtils.i(TAG, "storyHeaderHeight" + storyHeaderViewHeight);
         int toolbarHeight = mActionBarToolbar.getHeight();
-        LogUtils.i(TAG,"toolbarHeight"+toolbarHeight);
+        LogUtils.i(TAG, "toolbarHeight" + toolbarHeight);
         float contentHeight = storyHeaderViewHeight - toolbarHeight;
         float ratio = Math.min(scrollY / contentHeight, 1.0f);
         mActionBarToolbar.getBackground().setAlpha((int) (ratio * 0xFF));

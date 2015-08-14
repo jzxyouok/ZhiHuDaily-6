@@ -26,6 +26,4 @@ public class CollectedActivity extends BaseAppCompatActivity {
                     .commit();
         }
     }
-
-
 }
