@@ -1,6 +1,5 @@
 package com.sdust.zhihudaily.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +29,7 @@ import com.sdust.zhihudaily.model.Editor;
 import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
 import com.sdust.zhihudaily.util.IntentUtils;
+import com.sdust.zhihudaily.util.LogUtils;
 import com.sdust.zhihudaily.util.SharedPrefUtils;
 import com.sdust.zhihudaily.util.WebUtils;
 import com.sdust.zhihudaily.widget.AvatarsView;
@@ -334,33 +334,21 @@ public class StoryFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
-                changeHeaderPosition();
                 changeToolbarAlpha();
             }
         });
     }
 
-    private void changeHeaderPosition() {
-        int scrollY = scrollView.getScrollY();
 
-        float storyHeaderViewHeight = getStoryHeaderViewHeight();
-        if (scrollY < 0) {
-            storyHeaderViewHeight += Math.abs(scrollY);
-        }
-        storyHeaderView.getLayoutParams().height = (int) storyHeaderViewHeight;
-
-        int headerScrollY = (scrollY > 0) ? (scrollY / 2) : 0;
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            storyHeaderView.setScrollY(headerScrollY);
-            storyHeaderView.requestLayout();
-        }
-    }
 
     private void changeToolbarAlpha() {
 
         int scrollY = scrollView.getScrollY();
+        LogUtils.i(TAG,"scrolly "+scrollY+"");
         int storyHeaderViewHeight = getStoryHeaderViewHeight();
+        LogUtils.i(TAG,"storyHeaderHeight"+storyHeaderViewHeight);
         int toolbarHeight = mActionBarToolbar.getHeight();
+        LogUtils.i(TAG,"toolbarHeight"+toolbarHeight);
         float contentHeight = storyHeaderViewHeight - toolbarHeight;
         float ratio = Math.min(scrollY / contentHeight, 1.0f);
         mActionBarToolbar.getBackground().setAlpha((int) (ratio * 0xFF));
