@@ -9,3 +9,5 @@
 - [com.squareup.okhttp:okhttp:2.3.0](https://github.com/square/okhttp)
 - [com.nostra13.universalimageloader:universal-image-loader:1.9.3](https://github.com/nostra13/Android-Universal-Image-Loader)
 - [com.jakewharton:butterknife:6.0.0](https://github.com/JakeWharton/butterknife)
+
+###![](http://ww2.sinaimg.cn/large/b00f9334jw1ev25ot63fmg20dz0o6b2r.gif)
