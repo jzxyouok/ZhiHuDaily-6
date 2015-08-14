@@ -1,9 +1,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="settings_settings"
+        android:title="@string/pref_title" >
 
     <CheckBoxPreference
-        android:key="example_checkbox"
-        android:title="@string/pref_title_night"
-        android:defaultValue="true" />
+        android:key="night_checkbox"
+        android:title="@string/pref_night"
+        android:summary="@string/pref_night_summary"
+        android:defaultValue="false" />
 
 
     <EditTextPreference
@@ -15,7 +19,7 @@
         android:capitalize="words"
         android:singleLine="true"
         android:maxLines="1" />
-
+</PreferenceCategory>
 
     <ListPreference
         android:key="example_list"

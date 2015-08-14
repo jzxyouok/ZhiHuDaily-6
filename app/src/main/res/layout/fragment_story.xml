@@ -27,6 +27,11 @@
                 android:layout_height="@dimen/view_header_story_height"/>
 
             <include layout="@layout/layout_avatars" />
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
         </LinearLayout>
 
     </ScrollView>

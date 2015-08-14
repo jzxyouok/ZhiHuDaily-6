@@ -5,7 +5,10 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_night">夜间模式</string>
+    <string name="pref_night">夜间模式</string>
+    <string name="pref_night_summary">切换为夜间模式</string>
+
+    <string name="pref_title">偏好设置</string>
 
 
     <string name="pref_title_demo1">设置样例1</string>

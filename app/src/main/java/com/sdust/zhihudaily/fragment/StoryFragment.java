@@ -30,6 +30,7 @@ import com.sdust.zhihudaily.model.Editor;
 import com.sdust.zhihudaily.model.Story;
 import com.sdust.zhihudaily.repository.interfaces.Repository;
 import com.sdust.zhihudaily.util.IntentUtils;
+import com.sdust.zhihudaily.util.SharedPrefUtils;
 import com.sdust.zhihudaily.util.WebUtils;
 import com.sdust.zhihudaily.widget.AvatarsView;
 import com.sdust.zhihudaily.widget.ScrollPullDownHelper;
@@ -63,9 +64,10 @@ public class StoryFragment extends Fragment {
     AvatarsView avatarsView;
 
     @InjectView(R.id.spaceView)
-    View spaceView;
+    View spaceView;//占位用的
 
-    private WebView refWebView;//加载webview可能会造成OOM，所以将其设置为软引用，防止OOM
+    @InjectView(R.id.webview)
+    WebView refWebView;//加载webview可能会造成OOM，所以将其设置为软引用，防止OOM
 
     private StoryHeaderView storyHeaderView;
 
@@ -115,7 +117,6 @@ public class StoryFragment extends Fragment {
         setHasOptionsMenu(true);//设置含有选项按钮
         if (getArguments() != null) {
             mStoryId = getArguments().getString(IntentUtils.EXTRA_STORY_ID);
-
         }
 
         mScrollPullDownHelper = new ScrollPullDownHelper();
@@ -131,11 +132,6 @@ public class StoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         storyHeaderView = StoryHeaderView.newInstance(container);
         avatarsView = (AvatarsView) inflater.inflate(R.layout.layout_avatars, container, false);
-        refWebView = new WebView(getActivity());
-        if (isWebViewOK()) {
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            refWebView.setLayoutParams(lp);
-        }
         return inflater.inflate(R.layout.fragment_story, container, false);
     }
 
@@ -145,20 +141,17 @@ public class StoryFragment extends Fragment {
         ButterKnife.inject(this, view);
 
         scrollView.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
-
-        if (isWebViewOK()) {
-            llWebViewContainer.addView(refWebView);
-        }
+        refresh();
     }
 
     private boolean isWebViewOK() {
-        return refWebView != null && refWebView != null;
+        return refWebView != null;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refresh();
+
     }
 
     @Override
@@ -221,12 +214,12 @@ public class StoryFragment extends Fragment {
                 if (!isCollected) {
                     insertCollectedDao();
                     item.setIcon(R.drawable.collected);
-                    Toast.makeText(getActivity(),"收藏成功",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "收藏成功", Toast.LENGTH_SHORT).show();
                     isCollected = true;
                 } else {
                     mCollectedDao.deleteCollected(mStoryId);
                     item.setIcon(R.drawable.collect);
-                    Toast.makeText(getActivity(),"取消收藏",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "取消收藏", Toast.LENGTH_SHORT).show();
                     isCollected = false;
                 }
         }
@@ -266,14 +259,18 @@ public class StoryFragment extends Fragment {
     }
 
     private void bindData(Story story) {
-        boolean hasImage = !TextUtils.isEmpty(story.getImage());
+        final boolean hasImage = !TextUtils.isEmpty(story.getImage());
         bindHeaderView(hasImage);
         bindAvatarsView();
-        bindWebView(hasImage);
+        llWebViewContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                bindWebView(hasImage);
+            }
+        });
     }
 
     private void bindHeaderView(boolean hasImage) {
-        // bind header view
         if (hasImage) {
             if (mActionBarToolbar != null) {
                 mActionBarToolbar.getBackground().setAlpha(0);
@@ -301,11 +298,13 @@ public class StoryFragment extends Fragment {
     }
 
     private void bindWebView(boolean hasImage) {
+        WebSettings settings = refWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setAppCacheEnabled(true);
+
         if (TextUtils.isEmpty(mStory.getBody())) {
-            WebSettings settings = refWebView.getSettings();
-            settings.setJavaScriptEnabled(true);
-            settings.setDomStorageEnabled(true);
-            settings.setAppCacheEnabled(true);
+
             refWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -315,8 +314,13 @@ public class StoryFragment extends Fragment {
             });
             refWebView.loadUrl(mStory.getShareUrl());
         } else {
-            String data = WebUtils.BuildHtmlWithCss(mStory.getBody(), mStory.getCssList(), false);
-            refWebView.loadDataWithBaseURL(WebUtils.BASE_URL, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, WebUtils.FAIL_URL);
+            boolean isNight = SharedPrefUtils.getIsNiaghtMode(getActivity());
+            String data = WebUtils.BuildHtmlWithCss(mStory.getBody(), mStory.getCssList(), isNight);
+            System.out.println(data);
+            //LogUtils.i(TAG,data);
+            refWebView.loadDataWithBaseURL(null, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, null);
+
+           // refWebView.
             if (hasImage) {
                 addSrollListener();
             }

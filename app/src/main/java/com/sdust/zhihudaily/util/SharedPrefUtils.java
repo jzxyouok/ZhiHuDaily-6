@@ -10,10 +10,16 @@ public class SharedPrefUtils {
 	
 	private static final String SHARED_PREF_START_JSON = "shared_pref-start_json";
 
+	private static final String SHARED_PREF_NIGHT_MODE = "night_checkbox";
+
 	public static SharedPreferences getDefaultSharedPreferences(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context);
 	}
-	
+
+	public static boolean getIsNiaghtMode(Context context) {
+		SharedPreferences sp = getDefaultSharedPreferences(context);
+		return sp.getBoolean(SHARED_PREF_NIGHT_MODE,false);
+	}
 	
 	 public static String getStartJson(Context context){
 	        SharedPreferences sp = getDefaultSharedPreferences(context);

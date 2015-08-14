@@ -16,7 +16,6 @@ public class CacheInterceptor implements Interceptor {
 
         Request request = chain.request();
 
-
         Response response = chain.proceed(request);
         return response.newBuilder()
                 .header(CACHE_CONTROL, "public, max-age=" + 60 * 10) // 10min
