@@ -2,6 +2,10 @@
 <resources>
 
     <string name="app_name">知乎日报</string>
+    <string name="app_sub_name">与世界分享你的知识、经验和见解</string>
+    <string name="app_version">1.0.0</string>
+    <string name="app_author">Kevin Xiu</string>
+
     <string name="action_settings">设置</string>
     <string name="start_text">Kevin</string>
     <string name="action_share">分享</string>

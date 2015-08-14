@@ -6,6 +6,10 @@ package com.sdust.zhihudaily;
  */
 public class Constants {
 
+
+
+	public static final String GITGUB_PROJECT = "https://github.com/xiuweikang/ZhiHuDaily";
+
 	/**
 	 * Datebases Constants
 	 */

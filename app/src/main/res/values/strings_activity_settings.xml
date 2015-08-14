@@ -10,21 +10,13 @@
 
     <string name="pref_title">偏好设置</string>
 
+    <string name="pref_no_photo">无图模式</string>
 
-    <string name="pref_title_demo1">设置样例1</string>
-    <string name="pref_default_demo1">Kevin</string>
+    <string name="pref_no_photo_summary">2G/3G网络不显示图片</string>
 
-    <string name="pref_title_demo2">设置样例2</string>
-    <string-array name="pref_example_list_titles">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
+    <string name="pref_about">关于</string>
 
-
+    <string name="pref_version">版本信息</string>
+    <string name="pref_about_me">关于我</string>
+ 
 </resources>

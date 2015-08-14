@@ -316,11 +316,8 @@ public class StoryFragment extends Fragment {
         } else {
             boolean isNight = SharedPrefUtils.getIsNiaghtMode(getActivity());
             String data = WebUtils.BuildHtmlWithCss(mStory.getBody(), mStory.getCssList(), isNight);
-            System.out.println(data);
-            //LogUtils.i(TAG,data);
             refWebView.loadDataWithBaseURL(null, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, null);
 
-           // refWebView.
             if (hasImage) {
                 addSrollListener();
             }
