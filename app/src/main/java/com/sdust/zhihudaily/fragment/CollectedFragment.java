@@ -82,8 +82,9 @@ public class CollectedFragment extends Fragment {
             }
         });
 
-
     }
+
+
 
     private void loadFirst() {
         if (mCollectedStories.size() <= 20) {

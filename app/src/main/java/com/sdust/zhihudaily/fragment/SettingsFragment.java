@@ -14,16 +14,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sdust.zhihudaily.Constants;
 import com.sdust.zhihudaily.R;
+import com.sdust.zhihudaily.db.CacheDao;
+
+import java.io.File;
 
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
-
+    private static final String TAG = StartFragment.class.getSimpleName();
     private static final String PREF_VERSION = "pref_version";
     private static final String PREF_ABOUT_ME = "pref_about";
+    private static final String PREF_CLEAR_CACHE = "pref_clear_cache";
 
+
+    private Preference clearCachePreference;
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -34,6 +42,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         addPreferencesFromResource(R.xml.pref_general);
         findPreference(PREF_VERSION).setOnPreferenceClickListener(this);
         findPreference(PREF_ABOUT_ME).setOnPreferenceClickListener(this);
+        clearCachePreference = findPreference(PREF_CLEAR_CACHE);
+        clearCachePreference.setSummary(getCacheSize());
+        clearCachePreference.setOnPreferenceClickListener(this);
 
     }
 
@@ -58,8 +69,53 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             showDialog(false);
         } else if (preference.getKey().equals(PREF_VERSION)) {
             showDialog(true);
+        } else if (preference.getKey().equals(PREF_CLEAR_CACHE)) {
+            clearCache();
         }
         return false;
+    }
+
+    private String getCacheSize() {
+        File file = ImageLoader.getInstance().getDiskCache().getDirectory();
+        long size = getFileSize(file);
+        if (size >= 1 * 1024 * 1024) {
+            String result = String.format("%.2f", size * 1.0 / (1024 * 1024));
+            return " " + result + "M";
+        } else {
+            String result = String.format("%.2f", size * 1.0 / (1024));
+            return " " + result + "K";
+        }
+    }
+
+    private long getFileSize(File file) {
+
+        if (file == null)
+            return 0;
+        long sum = 0;
+
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].isDirectory()) {
+                    sum += getFileSize(files[i]);
+                } else {
+                    sum += files[i].length();
+                }
+            }
+        } else {
+            sum = file.length();
+        }
+        return sum;
+    }
+
+
+    private void clearCache() {
+        ImageLoader.getInstance().clearDiskCache();
+        CacheDao dao = new CacheDao(getActivity());
+        dao.deleteAllCache();
+        Toast.makeText(getActivity(), "缓存已清除", Toast.LENGTH_SHORT).show();
+        clearCachePreference.setSummary(" 0.00K");
     }
 
     private void showDialog(boolean isVersion) {

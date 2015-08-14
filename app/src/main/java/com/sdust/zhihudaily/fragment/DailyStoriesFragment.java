@@ -186,6 +186,7 @@ public class DailyStoriesFragment extends BaseFragment {
                 mAdapter.appendList(dailyStories);
             }
 
+
             @Override
             public void failure(Exception e) {
                 mRecyclerView.setLoadingMore(false);

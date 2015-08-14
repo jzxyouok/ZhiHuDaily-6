@@ -55,6 +55,12 @@ public class CacheDao {
         db.close();
     }
 
+    public void deleteAllCache() {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_NAME);
+        db.close();
+    }
+
     public synchronized void updateCache(Cache cache) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from "
