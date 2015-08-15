@@ -112,6 +112,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     private void clearCache() {
         ImageLoader.getInstance().clearDiskCache();
+        ImageLoader.getInstance().clearMemoryCache();
+
         CacheDao dao = new CacheDao(getActivity());
         dao.deleteAllCache();
         Toast.makeText(getActivity(), "缓存已清除", Toast.LENGTH_SHORT).show();

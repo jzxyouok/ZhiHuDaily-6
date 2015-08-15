@@ -4,10 +4,8 @@ import java.util.List;
 
 
 public class WebUtils {
-    public static final String BASE_URL = "file:///android_asset/";
     public static final String MIME_TYPE = "text/html";
     public static final String ENCODING = "utf-8";
-    public static final String FAIL_URL = "http//:daily.zhihu.com/";
 
     private static final String CSS_LINK_PATTERN = " <link href=\"%s\" type=\"text/css\" rel=\"stylesheet\" />";
     private static final String NIGHT_DIV_TAG_START = "<div class=\"night\">";

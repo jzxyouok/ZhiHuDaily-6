@@ -1,5 +1,6 @@
 package com.sdust.zhihudaily.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -67,7 +68,7 @@ public class StoryFragment extends Fragment {
     View spaceView;//占位用的
 
     @InjectView(R.id.webview)
-    WebView refWebView;//加载webview可能会造成OOM，所以将其设置为软引用，防止OOM
+    WebView mWebView;//加载webview可能会造成OOM，所以将其设置为软引用，防止OOM
 
     private StoryHeaderView storyHeaderView;
 
@@ -150,9 +151,6 @@ public class StoryFragment extends Fragment {
         refresh();
     }
 
-    private boolean isWebViewOK() {
-        return refWebView != null;
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -164,44 +162,12 @@ public class StoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (isWebViewOK()) {
-            refWebView.onResume();
-        }
-
-        if(mBackFromSetting && isNight != SharedPrefUtils.getIsNiaghtMode(getActivity())) {
+        if (mBackFromSetting && isNight != SharedPrefUtils.getIsNiaghtMode(getActivity())) {
             isNight = !isNight;
             bindWebView(mHasImage);
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        if (isWebViewOK()) {
-            refWebView.onPause();
-        }
-    }
-
-    /**
-     * 释放掉
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (isWebViewOK()) {
-            refWebView.removeAllViews();
-            refWebView.destroy();
-            llWebViewContainer.removeView(refWebView);
-            refWebView = null;
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-    }
 
     @Override
     public void onStop() {
@@ -255,6 +221,25 @@ public class StoryFragment extends Fragment {
         collected.setImages(imageUrlList);
         collected.setMultiPic(getArguments().getString(IntentUtils.EXTRA_STORY_MULTIPIC));
         mCollectedDao.insertCollected(collected);
+    }
+
+    public void initWebView() {
+        WebSettings settings = mWebView.getSettings();
+        if (Build.VERSION.SDK_INT >= 19) {
+            settings.setLoadsImagesAutomatically(true);//API大于19时，如果多张图片url相同时，只会加载一个IMAGE所以直接加载        } else {
+            settings.setLoadsImagesAutomatically(false);
+        }
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                if (!mWebView.getSettings().getLoadsImagesAutomatically()) {
+                    mWebView.getSettings().setLoadsImagesAutomatically(true);
+                }
+            }
+        });
+
+
     }
 
     private void refresh() {
@@ -318,25 +303,23 @@ public class StoryFragment extends Fragment {
     }
 
     private void bindWebView(boolean hasImage) {
-        WebSettings settings = refWebView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setAppCacheEnabled(true);
+        initWebView();
 
         if (TextUtils.isEmpty(mStory.getBody())) {
 
-            refWebView.setWebViewClient(new WebViewClient() {
+            mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);
                     return true;
                 }
             });
-            refWebView.loadUrl(mStory.getShareUrl());
+            mWebView.loadUrl(mStory.getShareUrl());
         } else {
 
             String data = WebUtils.BuildHtmlWithCss(mStory.getBody(), mStory.getCssList(), isNight);
-            refWebView.loadDataWithBaseURL(null, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, null);
+            LogUtils.i(TAG, data);
+            mWebView.loadDataWithBaseURL(null, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, null);
 
             if (hasImage) {
                 addSrollListener();
