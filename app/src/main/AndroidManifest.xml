@@ -41,16 +41,20 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:theme="@style/SettingTheme"
-            android:label="@string/title_activity_settings">
+            android:label="@string/title_activity_settings"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+
         </activity>
 
         <activity
             android:name=".activity.StoryActivity"
-            android:label="@string/title_activity_story">
+            android:label="@string/title_activity_story"
+            android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
         <activity
             android:name=".activity.CollectedActivity"
-            android:label="@string/title_activity_collected">
+            android:label="@string/title_activity_collected"
+            android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
     </application>

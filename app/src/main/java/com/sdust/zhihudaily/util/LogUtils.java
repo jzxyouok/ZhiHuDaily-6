@@ -14,7 +14,7 @@ public class LogUtils {
     private static final int ERROR = 5;
     private static final int NOTHING = 6;
 
-    private static final int LEVEL = NOTHING;
+    private static final int LEVEL = VERBOSE;
 
     public static void v(String tag,String msg) {
         if(VERBOSE >= LEVEL) {
