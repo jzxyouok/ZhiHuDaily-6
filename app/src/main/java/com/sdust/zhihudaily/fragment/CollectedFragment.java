@@ -74,20 +74,15 @@ public class CollectedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                CollectedDao dao = new CollectedDao(getActivity());
-                mCollectedStories = dao.getAllCollected();
-                loadFirst();
-            }
-        });
-
+        CollectedDao dao = new CollectedDao(getActivity());
+        mCollectedStories = dao.getAllCollected();
+        loadFirst();
     }
 
     private void loadFirst() {
         if (mCollectedStories.size() <= 20) {
             mAdapter.setStories(mCollectedStories);
+            mItemCount = mCollectedStories.size();
         } else {
             List<Story> stories = new ArrayList<Story>();
             for (int i = 0; i < 20; i++) {
@@ -115,6 +110,7 @@ public class CollectedFragment extends Fragment {
             mItemCount += count;
         }
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);

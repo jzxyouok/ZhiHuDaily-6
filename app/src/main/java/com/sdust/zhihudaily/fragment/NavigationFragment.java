@@ -39,10 +39,9 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private View mFragmentContainerView;
+    private View mNavigationFragment;
     private RecyclerView mRecyclerView;
     private int mCurrentSelectedPosition = -1;
-    private boolean mFromSavedInstanceState;
     private NavigationDrawerAdapter mDrawerAdapter;
 
     private List<Theme> mThemes;
@@ -62,7 +61,6 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
-            mFromSavedInstanceState = true;
         }
         mDrawerAdapter = new NavigationDrawerAdapter();
         mDrawerAdapter.setNavigationCallbacks(this);
@@ -105,17 +103,17 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
 
 
     public boolean isDrawerOpen() {
-        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
+        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mNavigationFragment);
     }
 
     public void openDrawer() {
         if (mDrawerLayout != null)
-            mDrawerLayout.openDrawer(mFragmentContainerView);
+            mDrawerLayout.openDrawer(mNavigationFragment);
     }
 
     public void closeDrawer() {
         if (mDrawerLayout != null)
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
+            mDrawerLayout.closeDrawer(mNavigationFragment);
     }
 
     /**
@@ -130,13 +128,9 @@ public class NavigationFragment extends Fragment implements NavigationDrawerCall
 
 
     public void setup(int fragmentId, DrawerLayout drawerLayout, Toolbar toolbar) {
-        mFragmentContainerView = getActivity().findViewById(fragmentId);
+        mNavigationFragment = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
-        mDrawerLayout.setStatusBarBackground(R.color.style_color_primary);
-
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),
                 mDrawerLayout,

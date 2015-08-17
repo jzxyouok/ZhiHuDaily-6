@@ -27,9 +27,6 @@ public class StartFragment extends Fragment {
     @InjectView(R.id.tv_author)
     TextView mAuthorView;
 
-    @InjectView(R.id.img_logo)
-    ImageView mLogoImg;
-
     @InjectView(R.id.img_start)
     ImageView mStartImg;
 
