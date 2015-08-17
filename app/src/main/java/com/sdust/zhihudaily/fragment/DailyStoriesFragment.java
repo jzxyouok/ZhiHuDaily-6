@@ -66,8 +66,11 @@ public class DailyStoriesFragment extends BaseFragment {
                 loadMore();
             }
 
+
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                LogUtils.d(TAG,dy+"");
                 changeActionBarTitle(dy);
             }
         });

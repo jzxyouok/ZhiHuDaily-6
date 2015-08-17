@@ -21,22 +21,25 @@ import java.util.List;
  */
 public class DailyStoriesAdapter extends RecyclerView.Adapter {
     public static final String TAG = DailyStoriesAdapter.class.getSimpleName();
-    protected  List<Item> mItems;
+    protected List<Item> mItems;
     protected List<Item> mTmpItem;
 
-    public class Type{
+    public class Type {
         public static final int TYPE_HEADER = 0;
         public static final int TYPE_DATE = 1;
         public static final int TYPE_STORY = 2;
     }
+
     public DailyStoriesAdapter() {
         mItems = new ArrayList<Item>();
         mTmpItem = new ArrayList<Item>();
     }
+
     public void setList(DailyStories dailyStories) {
         mItems.clear();
         appendList(dailyStories);
     }
+
     public void appendList(DailyStories dailyStories) {
         int positionStart = mItems.size();
 
@@ -86,20 +89,21 @@ public class DailyStoriesAdapter extends RecyclerView.Adapter {
             }
         }
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = null;
         switch (viewType) {
             case Type.TYPE_HEADER:
                 itemView = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.recycler_header_viewpager, parent, false);
+                        inflate(R.layout.recycler_header_viewpager, parent, false);
                 return new HeaderViewPagerHolder(itemView, mItems.get(0).getStories());
             case Type.TYPE_DATE:
                 itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.recycler_item_date, parent, false);
                 return new DateViewHolder(itemView);
             case Type.TYPE_STORY:
-                itemView =  LayoutInflater.from(parent.getContext()).
+                itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.recycler_item_story, parent, false);
                 return new StoryViewHolder(itemView);
             default:
@@ -132,6 +136,7 @@ public class DailyStoriesAdapter extends RecyclerView.Adapter {
     public Item getItem(int position) {
         return mItems.get(position);
     }
+
     public String getTitleBeforePosition(int position) {
         mTmpItem.clear();
         mTmpItem.addAll(mItems.subList(0, position + 1));
