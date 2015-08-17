@@ -11,8 +11,6 @@ public class BaseFragment extends Fragment {
     public static final String ARG_THEME_POSITION = "theme_Position";
     public static final String ARG_THEME_ID = "theme_id";
 
-    public static final int THEME_NUMBER_MAIN = 0;
-    public static final String THEME_ID_MAIN = "section_id_main";
 
     private int mArgThemeNumber;
 

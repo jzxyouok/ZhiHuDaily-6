@@ -27,7 +27,7 @@ public class LoadMoreRecyclerView extends RecyclerView {
 
     void init() {
 
-        this.setOnScrollListener(new onLoadMoreScrollListener());
+        this.addOnScrollListener(new onLoadMoreScrollListener());
     }
 
     public static class onLoadMoreScrollListener extends OnScrollListener {
