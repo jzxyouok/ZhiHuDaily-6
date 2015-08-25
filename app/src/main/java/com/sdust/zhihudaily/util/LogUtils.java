@@ -36,7 +36,7 @@ public class LogUtils {
             Log.w(tag,msg);
         }
     }
-    public static void E(String tag,String msg) {
+    public static void e(String tag,String msg) {
         if(ERROR >= LEVEL) {
             Log.e(tag,msg);
         }

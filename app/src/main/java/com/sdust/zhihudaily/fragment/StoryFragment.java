@@ -226,7 +226,8 @@ public class StoryFragment extends Fragment {
     public void initWebView() {
         WebSettings settings = mWebView.getSettings();
         if (Build.VERSION.SDK_INT >= 19) {
-            settings.setLoadsImagesAutomatically(true);//API大于19时，如果多张图片url相同时，只会加载一个IMAGE所以直接加载        } else {
+            settings.setLoadsImagesAutomatically(true);//API大于19时，如果多张图片url相同时，只会加载一个IMAGE所以直接加载
+        } else {
             settings.setLoadsImagesAutomatically(false);
         }
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -318,7 +319,7 @@ public class StoryFragment extends Fragment {
         } else {
 
             String data = WebUtils.BuildHtmlWithCss(mStory.getBody(), mStory.getCssList(), isNight);
-            LogUtils.i(TAG, data);
+            LogUtils.d(TAG, data);
             mWebView.loadDataWithBaseURL(null, data, WebUtils.MIME_TYPE, WebUtils.ENCODING, null);
 
             if (hasImage) {
@@ -343,16 +344,17 @@ public class StoryFragment extends Fragment {
     private void changeToolbarAlpha() {
 
         int scrollY = scrollView.getScrollY();
-        LogUtils.i(TAG, "scrolly " + scrollY + "");
+        LogUtils.d(TAG, "scrolly " + scrollY + "");
         int storyHeaderViewHeight = getStoryHeaderViewHeight();
-        LogUtils.i(TAG, "storyHeaderHeight" + storyHeaderViewHeight);
+        LogUtils.d(TAG, "storyHeaderHeight" + storyHeaderViewHeight);
         int toolbarHeight = mActionBarToolbar.getHeight();
-        LogUtils.i(TAG, "toolbarHeight" + toolbarHeight);
+        LogUtils.d(TAG, "toolbarHeight" + toolbarHeight);
         float contentHeight = storyHeaderViewHeight - toolbarHeight;
-        float ratio = Math.min(scrollY / contentHeight, 1.0f);
+        LogUtils.d(TAG,"ratio"+scrollY / contentHeight);
+        float ratio = Math.min(scrollY / contentHeight, 1.0f);//设置toolbar的透明度 当scrool滑到HeaderViewHeight - toolbarHeight时 为1
         mActionBarToolbar.getBackground().setAlpha((int) (ratio * 0xFF));
         if (scrollY <= contentHeight) {
-            mActionBarToolbar.setY(0f);
+            mActionBarToolbar.setY(0f);//让其一直在顶部
             return;
         }
 
